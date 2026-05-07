@@ -1,6 +1,19 @@
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
-.env*
-!.env.example
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor stuff
+.vscode/
+.idea/
+*.swp
+*~
+
+# Wrangler / Cloudflare local state
+.wrangler/
+node_modules/
+wrangler.toml
+.dev.vars
+
+# Logs
+*.log
+npm-debug.log*
