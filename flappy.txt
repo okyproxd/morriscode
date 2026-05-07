@@ -1,0 +1,125 @@
+* === FLAPPY BIRD ===
+* click the canvas, then press SPACE (or click) to flap
+* fly through the gaps. don't hit pipes or the ground!
+
+background(skyblue)
+
+* the bird
+variable(birdY : 500)
+variable(birdV : 0)
+variable(score : 0)
+variable(playing : yes)
+variable(needsReset : no)
+
+* the pipe (just one, recycled when it goes off screen)
+variable(pipeX : 1700)
+variable(gapY : 500)
+
+* draw the bird, ground, pipe, and score
+draw(circle_1:3:gold:noborder:400,{birdY})
+draw(rectangle_99:8:moss:noborder:800,990)
+draw(text_1"0":7:white:noborder:800,120:pixel)
+draw(text_2"flap with SPACE":3:white:noborder:800,200)
+
+* SPACE flap or click flap
+when(click)
+  if(playing) then(variable(birdV : -16))
+  if(playing = no) then(variable(needsReset : yes))
+end()
+
+forever()
+
+  if(needsReset = yes)
+    clear()
+    variable(birdY : 500)
+    variable(birdV : 0)
+    variable(score : 0)
+    variable(playing : yes)
+    variable(needsReset : no)
+    variable(pipeX : 1700)
+    variable(gapY : 500)
+    draw(circle_1:3:gold:noborder:400,{birdY})
+    draw(rectangle_99:8:moss:noborder:800,990)
+    draw(text_1"0":7:white:noborder:800,120:pixel)
+    draw(text_2"flap with SPACE":3:white:noborder:800,200)
+  end()
+
+  if(playing)
+
+    * --- input: space to flap ---
+    if(key = ' ') then(variable(birdV : -16))
+    if(key = Space) then(variable(birdV : -16))
+    if(key = SPACE) then(variable(birdV : -16))
+
+    * --- gravity ---
+    add(birdV, 1)
+    add(birdY, birdV)
+
+    * --- ceiling and floor ---
+    if(birdY < 30) then(variable(birdY : 30))
+    if(birdY >= 940)
+      variable(playing : no)
+    end()
+
+    * --- pipe moves left ---
+    subtract(pipeX, 14)
+
+    * --- pipe goes off screen → recycle and score ---
+    if(pipeX < -100)
+      variable(pipeX : 1700)
+      random(gapY, 250, 750)
+      add(score, 1)
+      beep(E, 80)
+      delete(text_1)
+      draw(text_1"{score}":7:white:noborder:800,120:pixel)
+    end()
+
+    * --- pipe collision: bird is at x=400, gap is 280 tall around gapY ---
+    if(pipeX < 500)
+      if(pipeX > 280)
+        * bird and pipe overlap horizontally — check vertical
+        variable(gapTop : {gapY})
+        subtract(gapTop, 140)
+        variable(gapBot : {gapY})
+        add(gapBot, 140)
+        if(birdY < gapTop)
+          variable(playing : no)
+        end()
+        if(birdY > gapBot)
+          variable(playing : no)
+        end()
+      end()
+    end()
+
+    * --- redraw ---
+    delete(circle_1)
+    draw(circle_1:3:gold:noborder:400,{birdY})
+    * top pipe
+    variable(topY : {gapY})
+    subtract(topY, 470)
+    delete(rectangle_2)
+    draw(rectangle_2:5:lime:noborder:{pipeX},{topY})
+    * bottom pipe
+    variable(botY : {gapY})
+    add(botY, 470)
+    delete(rectangle_3)
+    draw(rectangle_3:5:lime:noborder:{pipeX},{botY})
+
+    * remove the "flap with SPACE" hint after first point
+    if(score > 0) then(delete(text_2))
+
+  end()
+
+  if(playing = no)
+    if(needsReset = no)
+      delete(text_2)
+      draw(text_3"GAME OVER":8:tomato:noborder:800,400:bungee)
+      draw(text_4"Score: {score}":5:white:noborder:800,540:pixel)
+      draw(text_5"click to play again":3:silver:noborder:800,640)
+      beep(C, 400)
+      variable(playing : drawn)
+    end()
+  end()
+
+  wait(40)
+end()
