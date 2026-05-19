@@ -154,7 +154,7 @@ async function handleAI(request, env) {
   }
 
   try {
-    const result = await env.AI.run('@cf/meta/llama/-3.3-70b-instruct-fp8-fast', {
+    const result = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage }
