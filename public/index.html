@@ -51,8 +51,8 @@ nav::-webkit-scrollbar{display:none}
 .tab.active{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(15,40,80,0.08)}
 
 main{position:relative;z-index:1}
-.page{display:none;animation:fadeIn .25s ease}
-.page.active{display:block}
+.page{display:none !important;animation:fadeIn .25s ease}
+.page.active{display:block !important}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 [hidden]{display:none !important}
 .page-padded{padding:40px 24px 80px;max-width:1200px;margin:0 auto}
@@ -1237,15 +1237,20 @@ function goTo(name, fromPopstate){
 
   // If we're leaving the editor with a program running, stop it
   const editorActive = document.getElementById('page-editor').classList.contains('active');
-  if(editorActive && name !== 'editor' && typeof runtime !== 'undefined' && runtime){
-    if(!runtime.stopped){
-      runtime.stopped = true;
-      runtime.stopAllAnimations();
+  if(editorActive && name !== 'editor' && window.runtime){
+    if(!window.runtime.stopped){
+      window.runtime.stopped = true;
+      window.runtime.stopAllAnimations();
     }
   }
 
   tabs.forEach(t=>t.classList.toggle('active', t.dataset.page===name));
-  pages.forEach(p=>p.classList.toggle('active', p.id===`page-${name}`));
+  pages.forEach(p=>{
+    const isActive = p.id===`page-${name}`;
+    p.classList.toggle('active', isActive);
+    // Defensive: also force inline display so nothing can override
+    p.style.display = isActive ? 'block' : 'none';
+  });
 
   // Show floating AI bubble only on editor page
   const aiBar = document.getElementById('ai-bar');
@@ -2979,6 +2984,7 @@ function setFilename(name){
 }
 
 const runtime = new MorrisRuntime(canvas, consoleEl);
+window.runtime = runtime;
 runtime.clearCanvas();
 
 const exampleCode = `* === SNAKE ===
