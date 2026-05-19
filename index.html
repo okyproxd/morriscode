@@ -51,9 +51,10 @@ nav::-webkit-scrollbar{display:none}
 .tab.active{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(15,40,80,0.08)}
 
 main{position:relative;z-index:1}
-.page{display:none;animation:fadeIn .5s ease}
+.page{display:none;animation:fadeIn .25s ease}
 .page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+[hidden]{display:none !important}
 .page-padded{padding:40px 24px 80px;max-width:1200px;margin:0 auto}
 
 /* Hero */
@@ -107,23 +108,6 @@ section.feat-section{margin-top:80px}
 .btn-mini.run{background:var(--ink);color:#fff;border-color:var(--ink)}
 .btn-mini.run:hover{background:#1a2736}
 .btn-mini.clear{color:var(--bad)}
-.examples-dropdown{position:relative;display:inline-block}
-.examples-menu{
-  position:absolute;top:calc(100% + 6px);left:0;
-  background:#fff;border-radius:12px;padding:6px;
-  box-shadow:0 8px 24px rgba(15,40,80,0.18);
-  border:1px solid rgba(15,40,80,0.08);
-  display:none;flex-direction:column;gap:2px;
-  min-width:180px;z-index:50;
-}
-.examples-menu.show{display:flex}
-.example-item{
-  padding:9px 14px;border:none;background:transparent;
-  font-family:inherit;font-size:13.5px;color:var(--ink);
-  text-align:left;cursor:pointer;border-radius:8px;
-  transition:background .15s ease;
-}
-.example-item:hover{background:var(--paper)}
 .editor-body{flex:1;display:grid;grid-template-columns:1.05fr 1.4fr;gap:1px;background:rgba(15,40,80,0.06);border-radius:var(--radius-md);overflow:hidden;min-height:0}
 #page-editor.fullscreen .editor-body{border-radius:0}
 @media(max-width:880px){.editor-body{grid-template-columns:1fr;grid-template-rows:1fr 1fr}}
@@ -174,8 +158,10 @@ section.feat-section{margin-top:80px}
 .docs-grid{display:grid;grid-template-columns:240px 1fr;gap:32px}
 @media(max-width:880px){.docs-grid{grid-template-columns:1fr}}
 .docs-nav{position:sticky;top:100px;align-self:start;background:var(--glass-strong);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:14px;box-shadow:var(--glass-shadow);max-height:calc(100vh - 120px);overflow-y:auto}
-.docs-nav a{display:block;padding:7px 12px;border-radius:8px;color:var(--ink-soft);text-decoration:none;font-size:13.5px;transition:all .2s ease}
+.docs-nav a{display:block;padding:7px 12px;border-radius:8px;color:var(--ink-soft);text-decoration:none;font-size:13.5px;transition:all .2s ease;scroll-margin-top:100px}
 .docs-nav a:hover{background:rgba(255,255,255,0.6);color:var(--ink)}
+.docs-nav a.active-section{background:var(--accent);color:#fff}
+html{scroll-behavior:smooth}
 .docs-nav .nav-section{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-mute);padding:12px 12px 4px}
 .docs-content{background:var(--glass-strong);backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:var(--radius-lg);padding:40px;box-shadow:var(--glass-shadow)}
 .docs-content h2{font-family:'Fraunces',serif;font-weight:500;font-size:32px;letter-spacing:-0.02em;margin-top:40px;margin-bottom:14px;scroll-margin-top:100px}
@@ -235,6 +221,211 @@ footer a{color:var(--accent);text-decoration:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 body.editor-fullscreen .nav-wrap{display:none}
 body.editor-fullscreen footer{display:none}
+
+/* ===== AI page ===== */
+/* ===== AI page (full-page version of the chat) ===== */
+.ai-page-shell{
+  background:var(--glass-strong);
+  backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  padding:24px;
+  box-shadow:var(--glass-shadow);
+  max-width:760px;margin:0 auto;
+  display:flex;flex-direction:column;
+}
+.ai-page-modes{
+  display:flex;gap:6px;
+  background:rgba(15,40,80,0.06);
+  padding:5px;border-radius:999px;
+  margin-bottom:16px;width:fit-content;
+}
+.ai-page-mode{
+  padding:8px 18px;border-radius:999px;border:none;
+  background:transparent;color:var(--ink-soft);
+  font-family:inherit;font-size:14px;font-weight:500;
+  cursor:pointer;transition:all .2s ease;
+}
+.ai-page-mode:hover{color:var(--ink)}
+.ai-page-mode.active{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(15,40,80,0.08)}
+.ai-page-output{
+  height:440px;overflow-y:auto;
+  background:#fafcfe;
+  border:1px solid rgba(15,40,80,0.08);
+  border-radius:var(--radius-md);
+  padding:16px 18px;
+  margin-bottom:12px;
+  font-size:14px;line-height:1.55;color:var(--ink);
+}
+.ai-page-output:empty::before{
+  content:'Ask the AI to make something. The reply will show up here as a chat.';
+  color:var(--ink-mute);font-style:italic;
+}
+.ai-page-output .ai-msg-user,
+.ai-bar-output .ai-msg-user{
+  background:#e8f1ff;color:#0a4a8c;
+  padding:9px 13px;border-radius:14px 14px 4px 14px;
+  margin:6px 0 6px auto;max-width:80%;
+  display:block;width:fit-content;
+}
+.ai-page-output .ai-msg-ai,
+.ai-bar-output .ai-msg-ai{
+  background:#f4f7fb;color:var(--ink);
+  padding:11px 13px;border-radius:14px 14px 14px 4px;
+  margin:6px auto 6px 0;max-width:90%;
+  display:block;width:fit-content;
+}
+.ai-page-output pre,
+.ai-bar-output pre{
+  background:#0a1726;color:#cfe3ff;
+  padding:11px 13px;border-radius:8px;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;
+  overflow-x:auto;margin:6px 0;white-space:pre;
+}
+.ai-page-output .ai-action-row,
+.ai-bar-output .ai-action-row{
+  display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;
+}
+.ai-page-output .ai-action-row button,
+.ai-bar-output .ai-action-row button{
+  padding:6px 12px;border-radius:999px;font-size:12px;font-weight:500;
+  border:1px solid rgba(15,40,80,0.12);background:#fff;cursor:pointer;
+  font-family:inherit;color:var(--ink);transition:all .15s ease;
+}
+.ai-page-output .ai-action-row button:hover,
+.ai-bar-output .ai-action-row button:hover{background:var(--paper)}
+.ai-page-output .ai-action-row button.primary,
+.ai-bar-output .ai-action-row button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ai-page-form{
+  display:flex;gap:8px;
+}
+.ai-page-form input{
+  flex:1;border:1.5px solid rgba(15,40,80,0.12);
+  background:#fff;border-radius:999px;
+  padding:11px 18px;font-family:inherit;font-size:14px;color:var(--ink);outline:none;
+  transition:border-color .2s ease;
+}
+.ai-page-form input:focus{border-color:var(--accent)}
+.ai-page-form button{
+  padding:0 22px;border-radius:999px;
+  background:var(--ink);color:#fff;border:none;cursor:pointer;
+  font-family:inherit;font-size:14px;font-weight:500;
+}
+.ai-page-hint{
+  font-size:12.5px;color:var(--ink-mute);font-style:italic;
+  margin-top:10px;text-align:center;
+}
+.ai-loading{display:inline-block}
+.ai-loading::after{
+  content:'';display:inline-block;
+  width:6px;height:6px;border-radius:50%;background:var(--accent);
+  animation:aiDots 1s infinite;margin-left:4px;
+}
+@keyframes aiDots{0%,100%{opacity:0.3}50%{opacity:1}}
+
+/* ===== Floating AI chat bar ===== */
+.ai-bar{
+  position:fixed;bottom:30px;right:30px;
+  z-index:500;
+  font-family:inherit;
+}
+.ai-bar-toggle{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#0a84ff,#5ac8fa);
+  color:#fff;border:none;font-size:26px;cursor:pointer;
+  box-shadow:0 8px 24px rgba(10,132,255,0.4);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s ease;
+}
+.ai-bar-toggle:hover{transform:scale(1.08)}
+.ai-bar-panel{
+  position:absolute;bottom:70px;right:0;
+  width:min(380px, calc(100vw - 60px));
+  background:#fff;border-radius:var(--radius-lg);
+  box-shadow:0 16px 48px rgba(15,40,80,0.25);
+  border:1px solid rgba(15,40,80,0.08);
+  display:none;flex-direction:column;
+  overflow:hidden;
+}
+.ai-bar.open .ai-bar-panel{display:flex}
+.ai-bar-head{
+  padding:12px 16px;
+  background:linear-gradient(135deg,#0a84ff,#5ac8fa);
+  color:#fff;font-weight:500;font-size:14px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ai-bar-close{
+  background:rgba(255,255,255,0.2);border:none;
+  width:24px;height:24px;border-radius:50%;
+  color:#fff;cursor:pointer;font-size:13px;
+}
+.ai-bar-close:hover{background:rgba(255,255,255,0.35)}
+.ai-bar-modes{
+  display:flex;gap:0;background:#f4f7fb;padding:8px;
+  border-bottom:1px solid rgba(15,40,80,0.06);
+}
+.ai-bar-mode{
+  flex:1;padding:7px 0;border:none;background:transparent;
+  font-family:inherit;font-size:12.5px;font-weight:500;
+  color:var(--ink-soft);cursor:pointer;border-radius:6px;
+}
+.ai-bar-mode.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(15,40,80,0.08)}
+.ai-bar-output{
+  flex:1;padding:14px 16px;
+  height:280px;overflow-y:auto;
+  font-size:13.5px;line-height:1.55;color:var(--ink);
+  white-space:pre-wrap;
+}
+.ai-bar-output:empty::before{
+  content:'Ask me to generate code, explain something, or fix a bug.';
+  color:var(--ink-mute);font-style:italic;
+}
+.ai-bar-output pre{
+  background:#0a1726;color:#cfe3ff;
+  padding:10px 12px;border-radius:8px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  overflow-x:auto;margin:6px 0;white-space:pre;
+}
+.ai-bar-output .ai-msg-user{
+  background:#e8f1ff;color:#0a4a8c;
+  padding:8px 12px;border-radius:14px 14px 4px 14px;
+  margin:6px 0 6px auto;max-width:80%;
+  display:block;width:fit-content;font-size:13px;
+}
+.ai-bar-output .ai-msg-ai{
+  background:#f4f7fb;color:var(--ink);
+  padding:10px 12px;border-radius:14px 14px 14px 4px;
+  margin:6px auto 6px 0;max-width:90%;
+  display:block;width:fit-content;font-size:13px;
+}
+.ai-bar-output .ai-msg-ai pre{margin:6px -4px}
+.ai-bar-output .ai-action-row{
+  display:flex;gap:6px;margin-top:6px;
+}
+.ai-bar-output .ai-action-row button{
+  padding:5px 10px;border-radius:999px;font-size:11px;font-weight:500;
+  border:1px solid rgba(15,40,80,0.12);background:#fff;cursor:pointer;
+  font-family:inherit;color:var(--ink);
+}
+.ai-bar-output .ai-action-row button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ai-bar-form{
+  display:flex;gap:6px;padding:10px;
+  border-top:1px solid rgba(15,40,80,0.06);background:#fafcfe;
+}
+.ai-bar-form input{
+  flex:1;border:1px solid rgba(15,40,80,0.12);
+  background:#fff;border-radius:999px;
+  padding:8px 14px;font-family:inherit;font-size:13px;color:var(--ink);outline:none;
+}
+.ai-bar-form input:focus{border-color:var(--accent)}
+.ai-bar-form button{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--ink);color:#fff;border:none;cursor:pointer;
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+}
+
+/* In editor-fullscreen, the ai bar must stay visible */
+body.editor-fullscreen .ai-bar{z-index:600}
 
 /* ==== Balloon Help (vintage Mac System 7 style) ==== */
 .help-toggle{position:relative}
@@ -367,13 +558,14 @@ body.help-mode *[data-help]:hover{
 
 <div class="nav-wrap">
   <nav>
-    <div class="brand" data-help="MorrisCode v0.5 — your personal programming language. Click any tab above to navigate. Click the 💬 Help button to learn what each part does.">
+    <div class="brand" data-help="MorrisCode v0.9 — your personal programming language. Click any tab above to navigate. Click the 💬 Help button to learn what each part does.">
       <div class="brand-mark">M</div>MorrisCode
     </div>
     <button class="tab active" data-page="home" data-help="The home page. Quick intro and a live demo.">Home</button>
     <button class="tab" data-page="editor" data-help="Where you write code. Type your program, press Run, watch it work on the canvas.">Editor</button>
     <button class="tab" data-page="docs" data-help="The crash course. Learn the whole language in 5 minutes.">Docs</button>
     <button class="tab" data-page="reference" data-help="Every shape, color, and command — with pictures.">Reference</button>
+    <button class="tab" data-page="ai" data-help="Get help from an AI tutor that knows MorrisCode. Generate, explain, or fix code.">🤖 AI</button>
     <button class="tab" data-page="about" data-help="A note for Mr. Morris. The reason this exists.">About</button>
     <button class="tab help-toggle" id="help-toggle" data-help="Toggle help mode on or off. When help is on, hover over anything to learn what it does.">💬 Help</button>
   </nav>
@@ -419,15 +611,7 @@ body.help-mode *[data-help]:hover{
       <span class="filename" id="filename-display" style="flex:1;min-width:140px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-soft);padding:6px 8px;">untitled.txt</span>
       <button class="btn-mini" id="btn-open" data-help="Load a .txt file from your computer into the editor.">📂 Open</button>
       <button class="btn-mini" id="btn-save" data-help="Save your code as a .txt file. You can name it. Hold Shift+click to change the name even after picking 'don't ask again'.">💾 Save</button>
-      <div class="examples-dropdown">
-        <button class="btn-mini" id="btn-examples" data-help="Pick a complete example program to load. Great way to learn — read the code, then change things!">📚 Examples ▾</button>
-        <div class="examples-menu" id="examples-menu">
-          <button class="example-item" data-example="snake">🐍 Snake</button>
-          <button class="example-item" data-example="flappy">🐦 Flappy Bird</button>
-          <button class="example-item" data-example="pong">🏓 Pong</button>
-          <button class="example-item" data-example="tictactoe">⭕ Tic-Tac-Toe</button>
-        </div>
-      </div>
+      <button class="btn-mini" id="btn-example" data-help="Load the Snake game example, so you have working code to learn from.">✨ Example</button>
       <button class="btn-mini" id="btn-fs-editor" data-help="Make the editor fill your whole screen. Press Esc to go back.">⛶ Fullscreen</button>
       <button class="btn-mini clear" id="btn-clear" data-help="Erase your code and the canvas. Start over.">Clear</button>
       <button class="btn-mini" id="btn-stop" data-help="Stop a running program. Useful when forever() loops or animations are going.">⏹ Stop</button>
@@ -440,7 +624,7 @@ body.help-mode *[data-help]:hover{
         <div class="pane-head" data-help="This is where your code lives. Each line is one instruction. Lines starting with * are notes that get ignored."><span>Code</span><span class="badge" id="line-count">0 lines</span></div>
         <div class="code-area">
           <div class="line-gutter" id="line-gutter"></div>
-          <textarea id="code" spellcheck="false" data-help="Type your MorrisCode here. Press Cmd/Ctrl+Enter to run." placeholder="* write MorrisCode here&#10;print(Hello Mr. Morris!)&#10;draw(circle:5:gold)"></textarea>
+          <textarea id="code" spellcheck="false" data-help="Type your MorrisCode here. Click the ▶ Run button at the top to run your script." placeholder="* write MorrisCode here&#10;print(Hello Mr. Morris!)&#10;draw(circle:5:gold)"></textarea>
         </div>
       </div>
       <div class="pane output">
@@ -454,11 +638,32 @@ body.help-mode *[data-help]:hover{
             <button class="cv-fs-btn" id="btn-fs-canvas" data-help="Make the canvas fill your whole screen. Press Esc to exit.">⛶ Fullscreen</button>
           </div>
         </div>
-        <div id="console" data-help="The console. Anything you print() shows up here. Errors show up here too — with a (?) link to docs."><span class="log-info">// MorrisCode v0.5 · ready · click 💬 Help in the menu to learn how things work</span></div>
+        <div id="console" data-help="The console. Anything you print() shows up here. Errors show up here too — with a (?) link to docs."><span class="log-info">// MorrisCode v0.9 · ready · click 💬 Help in the menu to learn how things work</span></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Floating AI bar — shown only on editor page via JS -->
+<div class="ai-bar" id="ai-bar" hidden>
+  <button class="ai-bar-toggle" id="ai-bar-toggle" data-help="Open the AI chat. It can generate code, explain code, or fix bugs.">🤖</button>
+  <div class="ai-bar-panel" id="ai-bar-panel">
+    <div class="ai-bar-head">
+      <span>🤖 AI helper</span>
+      <button class="ai-bar-close" id="ai-bar-close">✕</button>
+    </div>
+    <div class="ai-bar-modes">
+      <button class="ai-bar-mode active" data-mode="generate">Generate</button>
+      <button class="ai-bar-mode" data-mode="explain">Explain</button>
+      <button class="ai-bar-mode" data-mode="fix">Fix</button>
+    </div>
+    <div class="ai-bar-output" id="ai-bar-output"></div>
+    <form class="ai-bar-form" id="ai-bar-form">
+      <input type="text" id="ai-bar-input" placeholder="ask anything..." autocomplete="off" />
+      <button type="submit">→</button>
+    </form>
+  </div>
+</div>
 
 <!-- DOCS -->
 <section class="page page-padded" id="page-docs">
@@ -486,13 +691,15 @@ body.help-mode *[data-help]:hover{
       <a href="#mouse">Mouse input</a>
       <a href="#collide">Collision</a>
       <a href="#delete">delete()</a>
+      <a href="#make-a-game">🛠 Make your own game</a>
 
       <div class="nav-section">Extra</div>
       <a href="#text">Text on canvas</a>
       <a href="#fonts">Fonts</a>
+      <a href="#ai-shape">🤖 aiShape</a>
       <a href="#sound">beep()</a>
       <a href="#lists">Lists</a>
-      <a href="#examples-section">Built-in Games</a>
+      <a href="#examples-section">The Snake example</a>
       <a href="#errors-help">Error messages</a>
     </aside>
 
@@ -713,6 +920,32 @@ draw(text"my note":4:navy:noborder:800,300:caveat)</code></pre>
       <p>All font names are <strong>lowercase, no spaces, no punctuation</strong>. Below is every available font, each saying "Hello, World!" in its style. Click a row to copy the name.</p>
       <div id="font-gallery" class="font-gallery"></div>
 
+      <h2 id="ai-shape">🤖 aiShape() — let AI draw for you</h2>
+      <p>You can ask the AI to draw any object as a custom shape, then use that shape like any other. The AI generates a simple SVG, and your shape gets that name forever (well, until you reload the page).</p>
+      <pre><code><span style="color:#9aa6b4">* define an AI shape — only do this once</span>
+aiShape(salmon, "a cooked salmon")
+aiShape(rocket, "a rocket ship pointing up")
+
+<span style="color:#9aa6b4">* now use them like normal shapes</span>
+draw(salmon:5:salmon:noborder:400,500)
+draw(rocket:6:tomato:noborder:1000,500)
+animate(rocket_1:bounce:3)</code></pre>
+      <h3>Rules for the name</h3>
+      <ul>
+        <li>One word, lowercase letters and numbers only</li>
+        <li>No spaces, no symbols (so <code>cookedsalmon</code> not <code>cooked salmon</code>)</li>
+        <li>Don't use a name that's already a real shape (like <code>circle</code>) — pick something unique</li>
+      </ul>
+      <h3>Tips</h3>
+      <ul>
+        <li>The AI is small — drawings come out simple, not photo-realistic. A "cooked salmon" looks like a salmon-shaped silhouette, not a Pixar fish.</li>
+        <li>Simple silhouettes work best: tree, fish, rocket, heart, mushroom, sword, key, crown</li>
+        <li>The first call takes a second or two (AI is thinking). Calling it again with the same name is instant — it's cached.</li>
+        <li>Color in <code>draw()</code> overrides the AI's choice. So <code>draw(salmon:5:gold)</code> draws the salmon shape but gold instead of pink.</li>
+      </ul>
+      <h3>What if the AI refuses?</h3>
+      <p>If you ask for something silly or inappropriate, the AI says no. You'll see an error in the console. Try a different word.</p>
+
       <h2 id="sound">🔊 beep()</h2>
       <pre><code>beep(C, 200)
 beep(E, 200)
@@ -731,15 +964,98 @@ listRemove(colors, 1)    <span style="color:#9aa6b4">* remove item #1</span>
 listLength(colors, n)    <span style="color:#9aa6b4">* how long is it?</span>
 listGet(c, colors, 1)    <span style="color:#9aa6b4">* read item into a variable</span></code></pre>
 
-      <h2 id="examples-section">🎮 Built-in Examples</h2>
-      <p>The editor has a <strong>📚 Examples</strong> dropdown with four complete games you can read and modify:</p>
+      <h2 id="make-a-game">🛠 How to make your own game (step by step)</h2>
+      <p>You know the pieces now. Let's put them together. We'll build a tiny game where a circle dodges falling squares. Each step is one or two lines — copy them in order, run after each step.</p>
+
+      <h3>Step 1 — Set the scene</h3>
+      <p>First we need a background and a "player" — a circle the user controls. We give the circle the id <code>circle_1</code> so we can move it later.</p>
+      <pre><code>background(midnight)
+draw(circle_1:3:gold:noborder:800,900)</code></pre>
+      <p>Press Run. You should see a gold circle near the bottom center of the canvas.</p>
+
+      <h3>Step 2 — Make the player move with arrow keys</h3>
+      <p>We put everything inside <code>forever()</code> so it keeps running. Inside, we check what key is pressed and move the circle. <code>set()</code> changes a property of an existing shape.</p>
+      <pre><code>background(midnight)
+draw(circle_1:3:gold:noborder:800,900)
+variable(playerX : 800)
+
+forever()
+  if(key = ArrowLeft) then(subtract(playerX, 15))
+  if(key = ArrowRight) then(add(playerX, 15))
+  set(circle_1:x:{playerX})
+  wait(30)
+end()</code></pre>
+      <p>Click the canvas first (so it listens for keys), then use ← and → arrows.</p>
+
+      <h3>Step 3 — Add a falling square</h3>
+      <p>Now we'll add a square that falls from the top. <code>random()</code> gives it a starting x position. Each loop, we move it down. When it goes off-screen, we reset it.</p>
+      <pre><code>background(midnight)
+draw(circle_1:3:gold:noborder:800,900)
+variable(playerX : 800)
+variable(enemyY : 0)
+random(enemyX, 100, 1500)
+draw(square_1:2:tomato:noborder:{enemyX},{enemyY})
+
+forever()
+  if(key = ArrowLeft) then(subtract(playerX, 15))
+  if(key = ArrowRight) then(add(playerX, 15))
+  set(circle_1:x:{playerX})
+
+  add(enemyY, 10)
+  if(enemyY > 1000)
+    variable(enemyY : 0)
+    random(enemyX, 100, 1500)
+  end()
+  set(square_1:x:{enemyX})
+  set(square_1:y:{enemyY})
+
+  wait(30)
+end()</code></pre>
+
+      <h3>Step 4 — Detect a hit</h3>
+      <p>Use <code>collide()</code> to check if the player and enemy are close. If they are, end the game.</p>
+      <pre><code>* (everything from step 3, plus add this inside the forever loop, before wait)
+collide(hit, playerX, 900, enemyX, enemyY, 50)
+if(hit)
+  draw(text"GAME OVER":8:tomato:noborder:800,500:bungee)
+  beep(C, 400)
+  stop()
+end()</code></pre>
+
+      <h3>Step 5 — Add a score</h3>
+      <p>Count how long you survive. Display it in the corner.</p>
+      <pre><code>variable(score : 0)
+draw(text_score"Score: 0":3:white:noborder:200,80)
+
+* inside the forever loop, when the enemy resets:
+if(enemyY > 1000)
+  variable(enemyY : 0)
+  random(enemyX, 100, 1500)
+  add(score, 1)
+  delete(text_score)
+  draw(text_score"Score: {score}":3:white:noborder:200,80)
+end()</code></pre>
+
+      <h3>The recipe</h3>
+      <p>Every game follows the same structure:</p>
+      <ol style="margin-left:22px;color:var(--ink-soft);font-size:15px;line-height:1.8">
+        <li><strong>Setup</strong> — background, draw initial shapes, declare variables (score, lives, positions)</li>
+        <li><strong>forever() loop</strong> — the heartbeat. Everything inside happens about 30 times a second.</li>
+        <li><strong>Read input</strong> — check <code>key</code>, <code>mouseX</code>, <code>clickX</code>, etc.</li>
+        <li><strong>Update state</strong> — move things, change variables, count score</li>
+        <li><strong>Check rules</strong> — collisions, win/lose conditions</li>
+        <li><strong>Redraw</strong> — use <code>set()</code> to update existing shapes (cheaper than delete+draw)</li>
+        <li><strong>wait()</strong> — control speed. Lower = faster.</li>
+      </ol>
+      <p>Try changing the recipe: replace squares with circles, add a second enemy, make the player shoot squares back. Once you can build the dodge game, you can build pong, breakout, asteroids, anything.</p>
+      <p>Click <strong>✨ Example</strong> in the editor toolbar to load the Snake game. It's the same source code you'd write yourself — read through it, then change things to learn:</p>
       <ul>
-        <li><strong>🐍 Snake</strong> — eat food, grow longer, don't hit walls. Uses lists and arrow keys.</li>
-        <li><strong>🐦 Flappy Bird</strong> — gravity-based hop-the-pipe game. Uses gravity math and SPACE input.</li>
-        <li><strong>🏓 Pong</strong> — you vs a bot AI. Uses W/S keys, ball physics, paddle collision.</li>
-        <li><strong>⭕ Tic-Tac-Toe</strong> — click cells to play. The bot uses a real strategy: win if it can, block if it must, then center → corner → side.</li>
+        <li>Make the snake faster: lower the <code>wait()</code> at the bottom of the loop</li>
+        <li>Change colors: swap <code>lime</code> for any color name</li>
+        <li>Make the snake start longer: add more numbers to <code>list(xs, ...)</code> and <code>list(ys, ...)</code></li>
+        <li>Bigger food: change the food's <code>circle_99:1</code> to <code>circle_99:2</code></li>
       </ul>
-      <p>Best way to learn: load one, change a number, see what happens. Make the snake faster. Change the bird's gravity. Make Pong's bot worse so you can win.</p>
+      <p>Best way to learn programming is to read working code, then break it on purpose.</p>
 
       <h2 id="errors-help">⚠️ When something breaks</h2>
       <p>Errors show up in the console with a <strong>line number</strong>, an explanation, and a <strong>(?)</strong> link that opens these docs at the right place.</p>
@@ -834,20 +1150,45 @@ listGet(c, colors, 1)    <span style="color:#9aa6b4">* read item into a variable
   </div>
 </section>
 
+<!-- AI -->
+<section class="page page-padded" id="page-ai">
+  <div class="section-head">
+    <h2>🤖 AI Helper</h2>
+    <p>Same chat as the bubble in the editor — just a bigger view.</p>
+  </div>
+  <div class="ai-page-shell">
+    <div class="ai-page-modes">
+      <button class="ai-page-mode active" data-mode="generate">Generate</button>
+      <button class="ai-page-mode" data-mode="explain">Explain</button>
+      <button class="ai-page-mode" data-mode="fix">Fix</button>
+    </div>
+    <div class="ai-page-output" id="ai-page-output"></div>
+    <form class="ai-page-form" id="ai-page-form">
+      <input type="text" id="ai-page-input" placeholder="ask the AI to make something..." autocomplete="off" />
+      <button type="submit">Ask →</button>
+    </form>
+    <div class="ai-page-hint" id="ai-page-hint">
+      Try: "draw 5 rainbow stars" or "make a bouncing ball that follows the mouse"
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="page page-padded" id="page-about">
   <div class="about-card">
     <h2>For Mr. Morris</h2>
     <p>You taught me that a curious question is worth more than a memorized answer. You are the best science teacher a kid could dream to learn with.</p>
+    <p>I've been working on this since the beginning of May, going to bed at 10PM every working night.</p>
     <p>I'm headed to a new school next year, and I wanted to leave behind something I made — not just a card. So I built a programming language. It's small and a little silly, but every line of it exists because of a class I'll never forget.</p>
     <p>Try it. Break it. Make a circle that turns into a face. Show it to your next class.</p>
+    <p>I hope I was a good enough student for you.</p>
     <p class="signature">— Owen</p>
   </div>
 </section>
 
 </main>
 
-<footer>MorrisCode v0.3 · made with care · <a href="#" id="footer-editor">try the editor</a></footer>
+<footer>MorrisCode v0.9 · made with care · <a href="#" id="footer-editor">try the editor</a></footer>
 <div class="toast" id="toast">Saved!</div>
 
 <div class="modal-overlay" id="save-modal">
@@ -880,10 +1221,11 @@ const PATH_TO_PAGE = {
   '/editor': 'editor',
   '/docs': 'docs',
   '/reference': 'reference',
+  '/ai': 'ai',
   '/about': 'about'
 };
 const PAGE_TO_PATH = {
-  home: '/', editor: '/editor', docs: '/docs', reference: '/reference', about: '/about'
+  home: '/', editor: '/editor', docs: '/docs', reference: '/reference', ai: '/ai', about: '/about'
 };
 
 function goTo(name, fromPopstate){
@@ -904,6 +1246,17 @@ function goTo(name, fromPopstate){
 
   tabs.forEach(t=>t.classList.toggle('active', t.dataset.page===name));
   pages.forEach(p=>p.classList.toggle('active', p.id===`page-${name}`));
+
+  // Show floating AI bubble only on editor page
+  const aiBar = document.getElementById('ai-bar');
+  if(aiBar){
+    if(name === 'editor'){
+      aiBar.removeAttribute('hidden');
+    } else {
+      aiBar.setAttribute('hidden', '');
+      aiBar.classList.remove('open'); // close panel when leaving
+    }
+  }
 
   if(name === 'docs'){
     setTimeout(() => {
@@ -938,7 +1291,8 @@ window.addEventListener('popstate', () => {
 });
 (function initialRoute(){
   const initialPage = PATH_TO_PAGE[window.location.pathname] || 'home';
-  if(initialPage !== 'home') goTo(initialPage, true);
+  // Always call goTo to make sure AI bar visibility, etc. is correct on first load
+  goTo(initialPage, true);
 })();
 
 /* ========= BALLOON HELP (vintage Mac System 7 style) ========= */
@@ -1587,12 +1941,14 @@ class MorrisRuntime {
     this.shapeCounter = {};
     this.bg = '#ffffff';
     this.animations = {};
-    this.pens = {}; // id -> {color, thickness, lastPos}
-    this.penTrails = []; // {from, to, color, thickness}
+    this.pens = {};
+    this.penTrails = [];
     this.stopped = false;
     this.inForever = 0;
     this.eventHandlers = { click: [], message: {} };
     this.startTime = performance.now();
+    // customShapes is per-session, NOT cleared on reset, so AI shapes survive Restart
+    if(!this.customShapes) this.customShapes = {};
   }
   log(text, cls='log-info'){
     const span = document.createElement('div');
@@ -1936,6 +2292,7 @@ class MorrisRuntime {
       }
       case 'move': await this.moveShape(args); break;
       case 'animate': this.animateShape(args); break;
+      case 'aishape': await this.fetchAIShape(args); break;
       case 'set': this.setShape(args); break;
       case 'pen': this.setupPen(args); break;
       case 'beep':
@@ -1960,24 +2317,25 @@ class MorrisRuntime {
     // rawArgs[0] may be: "circle", "circle_3", "text\"Hello\"", "text_2\"Hello\"", "custom"
     let raw0 = (rawArgs[0]||'').trim();
 
-    // text"..." or text_N"..." form — extract content first, then id, then shape name
+    // text"..." or text_ID"..." form — extract content first, then id, then shape name
     let textContent = null;
-    let customNum = null;
+    let customId = null;  // can be number or string now
     let shape;
 
-    // Try: text_N"content" or text"content" (also single quotes)
-    const textWithIdMatch = raw0.match(/^text(?:_(\d+))?\s*["']([^"']*)["']$/i);
+    // Try: text_ID"content" or text"content" (also single quotes)
+    // ID can be alphanumeric (text_score, text_t1, text_42)
+    const textWithIdMatch = raw0.match(/^text(?:_([a-z0-9]+))?\s*["']([^"']*)["']$/i);
     if(textWithIdMatch){
-      if(textWithIdMatch[1]) customNum = parseInt(textWithIdMatch[1], 10);
+      if(textWithIdMatch[1]) customId = textWithIdMatch[1];
       textContent = textWithIdMatch[2];
       shape = 'text';
     } else {
-      // No quoted text — just a regular shape, possibly with _N id
+      // No quoted text — just a regular shape, possibly with _ID
       const lower = raw0.toLowerCase();
-      const idMatch = lower.match(/^([a-z]+)_(\d+)$/);
+      const idMatch = lower.match(/^([a-z]+)_([a-z0-9]+)$/);
       if(idMatch){
         shape = idMatch[1];
-        customNum = parseInt(idMatch[2], 10);
+        customId = idMatch[2];
       } else {
         shape = lower;
       }
@@ -2067,10 +2425,14 @@ class MorrisRuntime {
     }
 
     let id;
-    if(customNum !== null){
-      id = `${shape}_${customNum}`;
-      if(!this.shapeCounter[shape] || this.shapeCounter[shape] < customNum){
-        this.shapeCounter[shape] = customNum;
+    if(customId !== null){
+      id = `${shape}_${customId}`;
+      // Track numeric counter only if id is numeric, so auto-numbered ids don't collide
+      const numericId = /^\d+$/.test(customId) ? parseInt(customId, 10) : null;
+      if(numericId !== null){
+        if(!this.shapeCounter[shape] || this.shapeCounter[shape] < numericId){
+          this.shapeCounter[shape] = numericId;
+        }
       }
       if(this.shapes[id]){
         const idx = this.shapeOrder.indexOf(id);
@@ -2096,6 +2458,11 @@ class MorrisRuntime {
   }
 
   renderShape(s){
+    // Custom AI-generated shape?
+    if(this.customShapes && this.customShapes[s.shape]){
+      this.renderCustomShape(s, this.customShapes[s.shape]);
+      return;
+    }
     const ctx = this.ctx;
     const px = sizeToPx(s.size) * (s.scale || 1);
     const [x, y] = s.pos;
@@ -2384,6 +2751,75 @@ class MorrisRuntime {
     });
   }
 
+  async fetchAIShape(args){
+    // aiShape(name, "description")
+    const name = (args[0] || '').toString().toLowerCase().trim();
+    const description = (args[1] || '').toString().trim();
+    if(!name) throw new Error(`aiShape needs a name. Try: aiShape(salmon, "a cooked salmon")`);
+    if(!description) throw new Error(`aiShape needs a description. Try: aiShape(${name}, "a cooked salmon")`);
+    if(!/^[a-z][a-z0-9]*$/.test(name)){
+      throw new Error(`aiShape name "${name}" must be one word, lowercase letters only`);
+    }
+    // Already cached?
+    if(this.customShapes[name]){
+      this.log(`  aiShape: using cached "${name}"`, 'log-cmd');
+      return;
+    }
+    this.log(`  aiShape: asking AI to draw "${description}"...`, 'log-cmd');
+    try {
+      const res = await fetch('/api/ai-shape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description })
+      });
+      if(!res.ok){
+        const errText = await res.text();
+        throw new Error(`AI request failed (${res.status})`);
+      }
+      const data = await res.json();
+      if(data.error || !data.paths || data.paths.length === 0){
+        throw new Error(data.error || 'AI returned no paths');
+      }
+      this.customShapes[name] = { paths: data.paths };
+      this.log(`  aiShape: "${name}" ready (${data.paths.length} paths)`, 'log-cmd');
+    } catch(err){
+      throw new Error(`couldn't generate "${name}": ${err.message}`);
+    }
+  }
+
+  renderCustomShape(s, customDef){
+    const ctx = this.ctx;
+    const px = sizeToPx(s.size) * (s.scale || 1);
+    const x = s.pos[0], y = s.pos[1];
+    const scale = px / 200; // shapes are designed for a 200x200 box
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    if(s.rotation) ctx.rotate(s.rotation);
+    ctx.globalAlpha = s.opacity ?? 1;
+
+    // Override fill if user gave a color (other than 'none')
+    const userFill = s.fill && s.fill !== 'none' ? resolveColor(s.fill) : null;
+
+    customDef.paths.forEach(p => {
+      try {
+        const path = new Path2D(p.d);
+        if(p.fill && p.fill.toLowerCase() !== 'none'){
+          ctx.fillStyle = userFill || resolveColor(p.fill) || p.fill;
+          ctx.fill(path);
+        }
+        if(p.stroke && p.stroke.toLowerCase() !== 'none'){
+          ctx.strokeStyle = resolveColor(p.stroke) || p.stroke;
+          ctx.lineWidth = 2;
+          ctx.stroke(path);
+        }
+      } catch(e){
+        // bad path data — skip silently
+      }
+    });
+    ctx.restore();
+  }
+
   animateShape(args){
     const [id, type, speedRaw] = args;
     const shape = this.shapes[id];
@@ -2440,7 +2876,14 @@ class MorrisRuntime {
       shape.size = sn;
     }
     else if(p === 'rotation') shape.rotation = (toNumber(value, 0)) * Math.PI / 180;
-    else throw new Error(`unknown property: ${prop}`);
+    else if(p === 'x'){ shape.pos = [toNumber(value, shape.pos[0]), shape.pos[1]]; }
+    else if(p === 'y'){ shape.pos = [shape.pos[0], toNumber(value, shape.pos[1])]; }
+    else if(p === 'pos'){
+      const parts = String(value||'').split(',').map(s=>toNumber(s));
+      shape.pos = [parts[0] ?? shape.pos[0], parts[1] ?? shape.pos[1]];
+    }
+    else if(p === 'text'){ shape.text = String(value); }
+    else throw new Error(`unknown property: ${prop}. Try opacity, color, border, size, rotation, x, y, pos, or text.`);
     this.redrawAll();
   }
 
@@ -2538,44 +2981,47 @@ function setFilename(name){
 const runtime = new MorrisRuntime(canvas, consoleEl);
 runtime.clearCanvas();
 
-const exampleCode = `* === SNAKE GAME ===
-* click the canvas, then use ARROW KEYS to play
-* eat the gold dots. don't hit walls or yourself!
-* on game over: click anywhere to play again
+const exampleCode = `* === SNAKE ===
+* arrow keys to move. eat the gold dots. don't hit walls or yourself.
+* press SPACE to start (or restart) at any time.
 
 background(midnight)
 
-* the snake — 3 segments to start, moving right
+* --- game state ---
 list(xs, 800, 760, 720)
 list(ys, 500, 500, 500)
 variable(length : 3)
 variable(dx : 40)
 variable(dy : 0)
 variable(score : 0)
+variable(best : 0)
 variable(alive : yes)
+variable(state : title)
 variable(needsReset : no)
+variable(flashTimer : 0)
+variable(foodPulse : 0)
 
-* place the first food at a random spot on the grid
+* place first food
 random(foodX, 2, 38)
 random(foodY, 2, 23)
 multiply(foodX, 40)
 multiply(foodY, 40)
 
-* score label and the food
-draw(text_1"Score: 0":3:white:noborder:140,50)
-draw(circle_99:1:gold:noborder:{foodX},{foodY})
+* --- title screen ---
+draw(text_t1"SNAKE":8:lime:noborder:800,380:bungee)
+draw(text_t2"arrow keys to move. eat the gold.":3:silver:noborder:800,540)
+draw(text_t3"press SPACE to start":4:gold:noborder:800,640:pixel)
+draw(text_t4"best: 0":3:silver:noborder:800,750:pixel)
 
-* === Click to restart after game over ===
+* SPACE starts/restarts the game
 when(click)
-  if(alive = no)
-    variable(needsReset : yes)
-  end()
+  if(state = title) then(variable(needsReset : yes))
+  if(state = gameover) then(variable(needsReset : yes))
 end()
 
-* === GAME LOOP ===
 forever()
 
-  * handle restart request
+  * --- handle restart / first-start ---
   if(needsReset = yes)
     clear()
     list(xs, 800, 760, 720)
@@ -2585,19 +3031,35 @@ forever()
     variable(dy : 0)
     variable(score : 0)
     variable(alive : yes)
+    variable(state : playing)
     variable(needsReset : no)
+    variable(flashTimer : 0)
     random(foodX, 2, 38)
     random(foodY, 2, 23)
     multiply(foodX, 40)
     multiply(foodY, 40)
-    draw(text_1"Score: 0":3:white:noborder:140,50)
-    draw(circle_99:1:gold:noborder:{foodX},{foodY})
-    beep(G, 100)
+    draw(text_score"Score: 0":3:white:noborder:160,50:pixel)
+    draw(text_best"Best: {best}":3:silver:noborder:1440,50:pixel)
+    draw(circle_food:1:gold:noborder:{foodX},{foodY})
+    beep(G, 80)
   end()
 
-  if(alive)
+  * --- title state: listen for space to start ---
+  if(state = title)
+    if(key = ' ') then(variable(needsReset : yes))
+    if(key = Space) then(variable(needsReset : yes))
+  end()
 
-    * read arrow keys (can't reverse direction)
+  * --- gameover state: listen for space to restart ---
+  if(state = gameover)
+    if(key = ' ') then(variable(needsReset : yes))
+    if(key = Space) then(variable(needsReset : yes))
+  end()
+
+  * --- main game loop ---
+  if(state = playing)
+
+    * read arrow keys (no reversing into yourself)
     if(key = ArrowRight)
       if(dx = 0)
         variable(dx : 40)
@@ -2623,7 +3085,7 @@ forever()
       end()
     end()
 
-    * compute new head position
+    * move head
     listGet(oldHeadX, xs, 1)
     listGet(oldHeadY, ys, 1)
     variable(newHeadX : {oldHeadX})
@@ -2653,8 +3115,10 @@ forever()
     if(ate)
       add(score, 1)
       add(length, 1)
-      beep(E, 80)
-      * grow: duplicate the tail
+      variable(flashTimer : 8)
+      beep(E, 60)
+      beep(G, 60)
+      * grow
       listGet(tailX, xs, length)
       listGet(tailY, ys, length)
       listAdd(xs, {tailX})
@@ -2664,13 +3128,19 @@ forever()
       random(foodY, 2, 23)
       multiply(foodX, 40)
       multiply(foodY, 40)
-      delete(circle_99)
-      draw(circle_99:1:gold:noborder:{foodX},{foodY})
-      delete(text_1)
-      draw(text_1"Score: {score}":3:white:noborder:140,50)
+      delete(circle_food)
+      draw(circle_food:1:gold:noborder:{foodX},{foodY})
+      delete(text_score)
+      draw(text_score"Score: {score}":3:white:noborder:160,50:pixel)
+      * update best if needed
+      if(score > best)
+        variable(best : {score})
+        delete(text_best)
+        draw(text_best"Best: {best}":3:silver:noborder:1440,50:pixel)
+      end()
     end()
 
-    * shift body — each segment takes the previous one's spot
+    * shift body
     loop(i from length to 2)
       variable(prev : {i})
       subtract(prev, 1)
@@ -2682,31 +3152,65 @@ forever()
     listSet(xs, 1, {newHeadX})
     listSet(ys, 1, {newHeadY})
 
-    * redraw the snake
+    * redraw snake — head is brighter, body is lime
     loop(i from 1 to length)
       delete(square_{i})
     end()
-    loop(i from 1 to length)
+    listGet(headX, xs, 1)
+    listGet(headY, ys, 1)
+    draw(square_1:1:gold:noborder:{headX},{headY})
+    loop(i from 2 to length)
       listGet(sx, xs, i)
       listGet(sy, ys, i)
       draw(square_{i}:1:lime:noborder:{sx},{sy})
     end()
 
+    * food pulse — alternate between two sizes for a glowing effect
+    add(foodPulse, 1)
+    if(foodPulse > 6)
+      variable(foodPulse : 0)
+    end()
+    if(foodPulse < 3)
+      delete(circle_food)
+      draw(circle_food:1:gold:noborder:{foodX},{foodY})
+    end()
+    if(foodPulse >= 3)
+      delete(circle_food)
+      draw(circle_food:2:sunshine:noborder:{foodX},{foodY})
+    end()
+
+    * +1 flash after eating
+    if(flashTimer > 0)
+      subtract(flashTimer, 1)
+      if(flashTimer = 7)
+        draw(text_pop"+1!":4:gold:noborder:{newHeadX},{newHeadY}:bungee)
+      end()
+      if(flashTimer = 0)
+        delete(text_pop)
+      end()
+    end()
+
+    * transition to gameover
+    if(alive = no)
+      variable(state : gameover)
+    end()
+
   end()
 
-  * game over screen — only draw it once
-  if(alive = no)
-    if(needsReset = no)
-      draw(text_2"GAME OVER":8:tomato:noborder:800,400)
-      draw(text_3"Final score: {score}":4:white:noborder:800,520)
-      draw(text_4"click anywhere to play again":3:silver:noborder:800,620)
-      beep(C, 400)
+  * --- gameover screen draw (once) ---
+  if(state = gameover)
+    if(alive = no)
+      draw(text_go1"GAME OVER":8:tomato:noborder:800,380:bungee)
+      draw(text_go2"final score: {score}":4:white:noborder:800,520:pixel)
+      draw(text_go3"best ever: {best}":3:silver:noborder:800,610:pixel)
+      draw(text_go4"press SPACE to play again":3:gold:noborder:800,720)
+      beep(C, 200)
+      beep(G, 400)
       variable(alive : drawn)
     end()
   end()
 
-  wait(110)
-end()`;
+  wait(110)end()`;
 
 codeEl.value = exampleCode;
 updateLineCount();
@@ -2764,683 +3268,7 @@ document.getElementById('btn-clear').addEventListener('click', () => {
 });
 
 const EXAMPLES = {
-  snake: exampleCode,
-  flappy: `* === FLAPPY BIRD ===
-* click the canvas, then press SPACE (or click) to flap
-* fly through the gaps. don't hit pipes or the ground!
-
-background(skyblue)
-
-* the bird
-variable(birdY : 500)
-variable(birdV : 0)
-variable(score : 0)
-variable(playing : yes)
-variable(needsReset : no)
-
-* the pipe (just one, recycled when it goes off screen)
-variable(pipeX : 1700)
-variable(gapY : 500)
-
-* draw the bird, ground, pipe, and score
-draw(circle_1:3:gold:noborder:400,{birdY})
-draw(rectangle_99:8:moss:noborder:800,990)
-draw(text_1"0":7:white:noborder:800,120:pixel)
-draw(text_2"flap with SPACE":3:white:noborder:800,200)
-
-* SPACE flap or click flap
-when(click)
-  if(playing) then(variable(birdV : -16))
-  if(playing = no) then(variable(needsReset : yes))
-end()
-
-forever()
-
-  if(needsReset = yes)
-    clear()
-    variable(birdY : 500)
-    variable(birdV : 0)
-    variable(score : 0)
-    variable(playing : yes)
-    variable(needsReset : no)
-    variable(pipeX : 1700)
-    variable(gapY : 500)
-    draw(circle_1:3:gold:noborder:400,{birdY})
-    draw(rectangle_99:8:moss:noborder:800,990)
-    draw(text_1"0":7:white:noborder:800,120:pixel)
-    draw(text_2"flap with SPACE":3:white:noborder:800,200)
-  end()
-
-  if(playing)
-
-    * --- input: space to flap ---
-    if(key = ' ') then(variable(birdV : -16))
-    if(key = Space) then(variable(birdV : -16))
-    if(key = SPACE) then(variable(birdV : -16))
-
-    * --- gravity ---
-    add(birdV, 1)
-    add(birdY, birdV)
-
-    * --- ceiling and floor ---
-    if(birdY < 30) then(variable(birdY : 30))
-    if(birdY >= 940)
-      variable(playing : no)
-    end()
-
-    * --- pipe moves left ---
-    subtract(pipeX, 14)
-
-    * --- pipe goes off screen → recycle and score ---
-    if(pipeX < -100)
-      variable(pipeX : 1700)
-      random(gapY, 250, 750)
-      add(score, 1)
-      beep(E, 80)
-      delete(text_1)
-      draw(text_1"{score}":7:white:noborder:800,120:pixel)
-    end()
-
-    * --- pipe collision: bird is at x=400, gap is 280 tall around gapY ---
-    if(pipeX < 500)
-      if(pipeX > 280)
-        * bird and pipe overlap horizontally — check vertical
-        variable(gapTop : {gapY})
-        subtract(gapTop, 140)
-        variable(gapBot : {gapY})
-        add(gapBot, 140)
-        if(birdY < gapTop)
-          variable(playing : no)
-        end()
-        if(birdY > gapBot)
-          variable(playing : no)
-        end()
-      end()
-    end()
-
-    * --- redraw ---
-    delete(circle_1)
-    draw(circle_1:3:gold:noborder:400,{birdY})
-    * top pipe
-    variable(topY : {gapY})
-    subtract(topY, 470)
-    delete(rectangle_2)
-    draw(rectangle_2:5:lime:noborder:{pipeX},{topY})
-    * bottom pipe
-    variable(botY : {gapY})
-    add(botY, 470)
-    delete(rectangle_3)
-    draw(rectangle_3:5:lime:noborder:{pipeX},{botY})
-
-    * remove the "flap with SPACE" hint after first point
-    if(score > 0) then(delete(text_2))
-
-  end()
-
-  if(playing = no)
-    if(needsReset = no)
-      delete(text_2)
-      draw(text_3"GAME OVER":8:tomato:noborder:800,400:bungee)
-      draw(text_4"Score: {score}":5:white:noborder:800,540:pixel)
-      draw(text_5"click to play again":3:silver:noborder:800,640)
-      beep(C, 400)
-      variable(playing : drawn)
-    end()
-  end()
-
-  wait(40)
-end()
-`,
-  pong: `* === PONG ===
-* click the canvas, then use W and S to move
-* the bot plays the right side. first to 5 wins.
-
-background(black)
-
-* paddles and ball
-variable(p1y : 500)
-variable(p2y : 500)
-variable(ballX : 800)
-variable(ballY : 500)
-variable(ballDX : 12)
-variable(ballDY : 8)
-variable(p1score : 0)
-variable(p2score : 0)
-variable(playing : yes)
-variable(needsReset : no)
-
-* draw the initial scene
-draw(rectangle_1:1:white:noborder:80,500)
-draw(rectangle_2:1:white:noborder:1520,500)
-draw(circle_1:1:white:noborder:{ballX},{ballY})
-draw(text_1"0":7:white:noborder:600,120:pixel)
-draw(text_2"0":7:white:noborder:1000,120:pixel)
-draw(text_3"PONG":4:silver:noborder:800,80:bungee)
-
-* click to restart after game over
-when(click)
-  if(playing = no)
-    variable(needsReset : yes)
-  end()
-end()
-
-forever()
-
-  if(needsReset = yes)
-    clear()
-    variable(p1y : 500)
-    variable(p2y : 500)
-    variable(ballX : 800)
-    variable(ballY : 500)
-    variable(ballDX : 12)
-    variable(ballDY : 8)
-    variable(p1score : 0)
-    variable(p2score : 0)
-    variable(playing : yes)
-    variable(needsReset : no)
-    draw(rectangle_1:1:white:noborder:80,500)
-    draw(rectangle_2:1:white:noborder:1520,500)
-    draw(circle_1:1:white:noborder:{ballX},{ballY})
-    draw(text_1"0":7:white:noborder:600,120:pixel)
-    draw(text_2"0":7:white:noborder:1000,120:pixel)
-    draw(text_3"PONG":4:silver:noborder:800,80:bungee)
-  end()
-
-  if(playing)
-
-    * --- player 1 controls (W/S) ---
-    if(key = w) then(subtract(p1y, 18))
-    if(key = W) then(subtract(p1y, 18))
-    if(key = s) then(add(p1y, 18))
-    if(key = S) then(add(p1y, 18))
-    * keep paddle in bounds
-    if(p1y < 80) then(variable(p1y : 80))
-    if(p1y > 920) then(variable(p1y : 920))
-
-    * --- bot paddle (follows ball, but slower than ball moves) ---
-    if(ballY > p2y) then(add(p2y, 8))
-    if(ballY < p2y) then(subtract(p2y, 8))
-    if(p2y < 80) then(variable(p2y : 80))
-    if(p2y > 920) then(variable(p2y : 920))
-
-    * --- move ball ---
-    add(ballX, ballDX)
-    add(ballY, ballDY)
-
-    * --- top/bottom bounce ---
-    if(ballY <= 20)
-      multiply(ballDY, -1)
-      beep(C, 40)
-    end()
-    if(ballY >= 980)
-      multiply(ballDY, -1)
-      beep(C, 40)
-    end()
-
-    * --- left paddle hit (player) ---
-    if(ballX <= 130)
-      collide(hit, ballX, ballY, 80, p1y, 110)
-      if(hit)
-        multiply(ballDX, -1)
-        variable(ballX : 140)
-        beep(E, 60)
-      end()
-    end()
-
-    * --- right paddle hit (bot) ---
-    if(ballX >= 1470)
-      collide(hit, ballX, ballY, 1520, p2y, 110)
-      if(hit)
-        multiply(ballDX, -1)
-        variable(ballX : 1460)
-        beep(E, 60)
-      end()
-    end()
-
-    * --- score: ball goes off left side ---
-    if(ballX < 0)
-      add(p2score, 1)
-      variable(ballX : 800)
-      variable(ballY : 500)
-      multiply(ballDX, -1)
-      beep(A, 200)
-      delete(text_2)
-      draw(text_2"{p2score}":7:white:noborder:1000,120:pixel)
-    end()
-
-    * --- score: ball goes off right side ---
-    if(ballX > 1600)
-      add(p1score, 1)
-      variable(ballX : 800)
-      variable(ballY : 500)
-      multiply(ballDX, -1)
-      beep(A, 200)
-      delete(text_1)
-      draw(text_1"{p1score}":7:white:noborder:600,120:pixel)
-    end()
-
-    * --- game over at 5 points ---
-    if(p1score >= 5)
-      variable(playing : no)
-    end()
-    if(p2score >= 5)
-      variable(playing : no)
-    end()
-
-    * --- redraw ---
-    delete(rectangle_1)
-    draw(rectangle_1:1:white:noborder:80,{p1y})
-    delete(rectangle_2)
-    draw(rectangle_2:1:white:noborder:1520,{p2y})
-    delete(circle_1)
-    draw(circle_1:1:white:noborder:{ballX},{ballY})
-
-  end()
-
-  if(playing = no)
-    if(needsReset = no)
-      if(p1score >= 5)
-        draw(text_4"YOU WIN!":8:lime:noborder:800,500:bungee)
-      end()
-      if(p2score >= 5)
-        draw(text_4"BOT WINS":8:tomato:noborder:800,500:bungee)
-      end()
-      draw(text_5"click to play again":3:silver:noborder:800,620)
-      beep(G, 400)
-      variable(playing : drawn)
-    end()
-  end()
-
-  wait(40)
-end()
-`,
-  tictactoe: `* === TIC-TAC-TOE ===
-* click any cell to place your X. the bot plays O.
-* three in a row wins!
-
-background(cream)
-
-* board state — list of 9 cells, "-" means empty
-list(cells, -, -, -, -, -, -, -, -, -)
-variable(turn : X)
-variable(winner : none)
-variable(needsReset : no)
-
-* draw the grid lines
-draw(line_1:3:charcoal:default:600,160:600,840)
-draw(line_2:3:charcoal:default:1000,160:1000,840)
-draw(line_3:3:charcoal:default:200,400:1400,400)
-draw(line_4:3:charcoal:default:200,600:1400,600)
-
-* title
-draw(text_t"TIC TAC TOE":4:charcoal:noborder:800,90:bungee)
-draw(text_s"your turn (X)":3:navy:noborder:800,930)
-
-* === click to place a piece ===
-when(click)
-  if(needsReset = no)
-    if(winner = none)
-      if(turn = X)
-        * figure out which cell got clicked
-        variable(cellIdx : 0)
-        if(clickX < 600)
-          if(clickY < 400) then(variable(cellIdx : 1))
-          if(clickY >= 400) then(if(clickY < 600) then(variable(cellIdx : 4)))
-          if(clickY >= 600) then(variable(cellIdx : 7))
-        end()
-        if(clickX >= 600)
-          if(clickX < 1000)
-            if(clickY < 400) then(variable(cellIdx : 2))
-            if(clickY >= 400) then(if(clickY < 600) then(variable(cellIdx : 5)))
-            if(clickY >= 600) then(variable(cellIdx : 8))
-          end()
-        end()
-        if(clickX >= 1000)
-          if(clickY < 400) then(variable(cellIdx : 3))
-          if(clickY >= 400) then(if(clickY < 600) then(variable(cellIdx : 6)))
-          if(clickY >= 600) then(variable(cellIdx : 9))
-        end()
-        * place X if cell is empty
-        if(cellIdx > 0)
-          listGet(curCell, cells, cellIdx)
-          if(curCell = -)
-            listSet(cells, cellIdx, X)
-            variable(turn : O)
-            beep(E, 80)
-          end()
-        end()
-      end()
-    end()
-  end()
-  if(needsReset = no)
-    if(winner != none)
-      variable(needsReset : yes)
-    end()
-  end()
-end()
-
-* === main loop: redraw, check win, do bot turn ===
-forever()
-
-  if(needsReset = yes)
-    clear()
-    list(cells, -, -, -, -, -, -, -, -, -)
-    variable(turn : X)
-    variable(winner : none)
-    variable(needsReset : no)
-    draw(line_1:3:charcoal:default:600,160:600,840)
-    draw(line_2:3:charcoal:default:1000,160:1000,840)
-    draw(line_3:3:charcoal:default:200,400:1400,400)
-    draw(line_4:3:charcoal:default:200,600:1400,600)
-    draw(text_t"TIC TAC TOE":4:charcoal:noborder:800,90:bungee)
-    draw(text_s"your turn (X)":3:navy:noborder:800,930)
-    beep(G, 100)
-  end()
-
-  * --- redraw all the cells (X or O) ---
-  loop(i from 1 to 9)
-    delete(text_c{i})
-  end()
-
-  loop(i from 1 to 9)
-    listGet(c, cells, i)
-    if(c != -)
-      * compute the cell's pixel center
-      variable(col : {i})
-      variable(row : {i})
-      * row = floor((i-1)/3), col = (i-1) % 3
-      subtract(col, 1)
-      subtract(row, 1)
-      * approximate row/col by dividing
-      * row 0 = i in 1,2,3 → subtract gives 0,1,2 → divide by 3 = 0
-      * row 1 = i in 4,5,6 → subtract gives 3,4,5 → divide by 3 = 1
-      * row 2 = i in 7,8,9 → subtract gives 6,7,8 → divide by 3 = 2
-      * we'll use modulo for col
-      command(math, col, %, col, 3)
-      command(math, row, /, row, 3)
-      * floor it
-      command(math, row, -, row, 0)
-      * row will be a decimal; we want integer. just check ranges instead:
-      variable(idx : {i})
-      variable(cx : 0)
-      variable(cy : 0)
-      if(idx = 1) then(variable(cx : 400))
-      if(idx = 1) then(variable(cy : 280))
-      if(idx = 2) then(variable(cx : 800))
-      if(idx = 2) then(variable(cy : 280))
-      if(idx = 3) then(variable(cx : 1200))
-      if(idx = 3) then(variable(cy : 280))
-      if(idx = 4) then(variable(cx : 400))
-      if(idx = 4) then(variable(cy : 500))
-      if(idx = 5) then(variable(cx : 800))
-      if(idx = 5) then(variable(cy : 500))
-      if(idx = 6) then(variable(cx : 1200))
-      if(idx = 6) then(variable(cy : 500))
-      if(idx = 7) then(variable(cx : 400))
-      if(idx = 7) then(variable(cy : 720))
-      if(idx = 8) then(variable(cx : 800))
-      if(idx = 8) then(variable(cy : 720))
-      if(idx = 9) then(variable(cx : 1200))
-      if(idx = 9) then(variable(cy : 720))
-
-      if(c = X)
-        draw(text_c{idx}"X":7:tomato:noborder:{cx},{cy}:bungee)
-      end()
-      if(c = O)
-        draw(text_c{idx}"O":7:dodgerblue:noborder:{cx},{cy}:bungee)
-      end()
-    end()
-  end()
-
-  * --- check for a winner ---
-  * 8 winning lines: rows, cols, diagonals
-  if(winner = none)
-    * row 1
-    listGet(a, cells, 1)
-    listGet(b, cells, 2)
-    listGet(c, cells, 3)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * row 2
-    listGet(a, cells, 4)
-    listGet(b, cells, 5)
-    listGet(c, cells, 6)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * row 3
-    listGet(a, cells, 7)
-    listGet(b, cells, 8)
-    listGet(c, cells, 9)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * col 1
-    listGet(a, cells, 1)
-    listGet(b, cells, 4)
-    listGet(c, cells, 7)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * col 2
-    listGet(a, cells, 2)
-    listGet(b, cells, 5)
-    listGet(c, cells, 8)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * col 3
-    listGet(a, cells, 3)
-    listGet(b, cells, 6)
-    listGet(c, cells, 9)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * diag 1: 1,5,9
-    listGet(a, cells, 1)
-    listGet(b, cells, 5)
-    listGet(c, cells, 9)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-    * diag 2: 3,5,7
-    listGet(a, cells, 3)
-    listGet(b, cells, 5)
-    listGet(c, cells, 7)
-    if(a = b) then(if(b = c) then(if(a != -) then(variable(winner : {a}))))
-  end()
-
-  * --- check for a draw (board full, no winner) ---
-  if(winner = none)
-    variable(emptyCount : 0)
-    loop(i from 1 to 9)
-      listGet(c, cells, i)
-      if(c = -) then(add(emptyCount, 1))
-    end()
-    if(emptyCount = 0)
-      variable(winner : draw)
-    end()
-  end()
-
-  * --- bot's turn ---
-  if(winner = none)
-    if(turn = O)
-      * the bot waits a moment so it feels human-ish
-      delete(text_s)
-      draw(text_s"bot is thinking...":3:dodgerblue:noborder:800,930)
-      wait(600)
-
-      * bot strategy:
-      *   1. take a winning move if there is one
-      *   2. block X from winning
-      *   3. take center
-      *   4. take a corner
-      *   5. take a side
-      variable(botMove : 0)
-
-      * --- 1: find a winning O move ---
-      loop(i from 1 to 9)
-        if(botMove = 0)
-          listGet(c, cells, i)
-          if(c = -)
-            * try placing O here, see if it wins
-            listSet(cells, i, O)
-            * check all 8 lines
-            variable(found : no)
-            * row 1
-            listGet(a, cells, 1)
-            listGet(b, cells, 2)
-            listGet(cc, cells, 3)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 4)
-            listGet(b, cells, 5)
-            listGet(cc, cells, 6)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 7)
-            listGet(b, cells, 8)
-            listGet(cc, cells, 9)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 1)
-            listGet(b, cells, 4)
-            listGet(cc, cells, 7)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 2)
-            listGet(b, cells, 5)
-            listGet(cc, cells, 8)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 3)
-            listGet(b, cells, 6)
-            listGet(cc, cells, 9)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 1)
-            listGet(b, cells, 5)
-            listGet(cc, cells, 9)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            listGet(a, cells, 3)
-            listGet(b, cells, 5)
-            listGet(cc, cells, 7)
-            if(a = O) then(if(b = O) then(if(cc = O) then(variable(found : yes))))
-            * undo the test
-            listSet(cells, i, -)
-            if(found = yes) then(variable(botMove : {i}))
-          end()
-        end()
-      end()
-
-      * --- 2: block X if X is about to win ---
-      if(botMove = 0)
-        loop(i from 1 to 9)
-          if(botMove = 0)
-            listGet(c, cells, i)
-            if(c = -)
-              listSet(cells, i, X)
-              variable(found : no)
-              listGet(a, cells, 1)
-              listGet(b, cells, 2)
-              listGet(cc, cells, 3)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 4)
-              listGet(b, cells, 5)
-              listGet(cc, cells, 6)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 7)
-              listGet(b, cells, 8)
-              listGet(cc, cells, 9)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 1)
-              listGet(b, cells, 4)
-              listGet(cc, cells, 7)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 2)
-              listGet(b, cells, 5)
-              listGet(cc, cells, 8)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 3)
-              listGet(b, cells, 6)
-              listGet(cc, cells, 9)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 1)
-              listGet(b, cells, 5)
-              listGet(cc, cells, 9)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listGet(a, cells, 3)
-              listGet(b, cells, 5)
-              listGet(cc, cells, 7)
-              if(a = X) then(if(b = X) then(if(cc = X) then(variable(found : yes))))
-              listSet(cells, i, -)
-              if(found = yes) then(variable(botMove : {i}))
-            end()
-          end()
-        end()
-      end()
-
-      * --- 3: take center ---
-      if(botMove = 0)
-        listGet(c, cells, 5)
-        if(c = -) then(variable(botMove : 5))
-      end()
-
-      * --- 4: take a corner ---
-      if(botMove = 0)
-        listGet(c, cells, 1)
-        if(c = -) then(variable(botMove : 1))
-      end()
-      if(botMove = 0)
-        listGet(c, cells, 3)
-        if(c = -) then(variable(botMove : 3))
-      end()
-      if(botMove = 0)
-        listGet(c, cells, 7)
-        if(c = -) then(variable(botMove : 7))
-      end()
-      if(botMove = 0)
-        listGet(c, cells, 9)
-        if(c = -) then(variable(botMove : 9))
-      end()
-
-      * --- 5: take any side ---
-      if(botMove = 0)
-        listGet(c, cells, 2)
-        if(c = -) then(variable(botMove : 2))
-      end()
-      if(botMove = 0)
-        listGet(c, cells, 4)
-        if(c = -) then(variable(botMove : 4))
-      end()
-      if(botMove = 0)
-        listGet(c, cells, 6)
-        if(c = -) then(variable(botMove : 6))
-      end()
-      if(botMove = 0)
-        listGet(c, cells, 8)
-        if(c = -) then(variable(botMove : 8))
-      end()
-
-      * place the bot's move
-      if(botMove > 0)
-        listSet(cells, botMove, O)
-        beep(G, 80)
-      end()
-      variable(turn : X)
-
-      delete(text_s)
-      draw(text_s"your turn (X)":3:navy:noborder:800,930)
-    end()
-  end()
-
-  * --- announce the winner ---
-  if(winner != none)
-    delete(text_s)
-    if(winner = X)
-      draw(text_s"YOU WIN!":7:lime:noborder:800,930:bungee)
-      beep(C, 200)
-      beep(E, 200)
-      beep(G, 400)
-    end()
-    if(winner = O)
-      draw(text_s"BOT WINS":7:tomato:noborder:800,930:bungee)
-      beep(G, 200)
-      beep(E, 200)
-      beep(C, 400)
-    end()
-    if(winner = draw)
-      draw(text_s"it's a draw":5:silver:noborder:800,930)
-      beep(D, 300)
-    end()
-    draw(text_s2"click to play again":3:silver:noborder:800,990)
-    variable(winner : announced)
-  end()
-
-  wait(120)
-end()
-`
+  snake: exampleCode
 };
 function loadExample(name){
   if(!EXAMPLES[name]) return;
@@ -3450,20 +3278,9 @@ function loadExample(name){
   runCode();
 }
 
-// Examples dropdown wiring
-const examplesBtn = document.getElementById('btn-examples');
-const examplesMenu = document.getElementById('examples-menu');
-examplesBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  examplesMenu.classList.toggle('show');
-});
-document.addEventListener('click', () => examplesMenu.classList.remove('show'));
-document.querySelectorAll('.example-item').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    examplesMenu.classList.remove('show');
-    loadExample(btn.dataset.example);
-  });
+// Single Example button: load Snake
+document.getElementById('btn-example').addEventListener('click', () => {
+  loadExample('snake');
 });
 /* ===== SAVE DIALOG ===== */
 const saveModal = document.getElementById('save-modal');
@@ -3723,6 +3540,255 @@ function buildFontGallery(){
 buildShapeGallery();
 buildColorGallery();
 buildFontGallery();
+
+/* ========= SMOOTH SCROLL FOR DOCS SIDEBAR ========= */
+document.querySelectorAll('.docs-nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+    if(!href || !href.startsWith('#')) return;
+    const target = document.getElementById(href.slice(1));
+    if(!target) return;
+    e.preventDefault();
+    // remove active from siblings, add to this
+    document.querySelectorAll('.docs-nav a').forEach(a => a.classList.remove('active-section'));
+    link.classList.add('active-section');
+    // smooth scroll with offset for sticky nav
+    const navHeight = document.querySelector('.nav-wrap')?.offsetHeight || 80;
+    const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+    window.scrollTo({ top, behavior: 'smooth' });
+    // update URL hash without jumping
+    history.replaceState(null, '', href);
+  });
+});
+
+/* ========= AI HELPER ========= */
+(function setupAI(){
+
+  // Shared API call
+  async function callAI(mode, prompt, code){
+    const res = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode, prompt, code })
+    });
+    if(!res.ok){
+      const err = await res.text();
+      throw new Error(`AI request failed (${res.status}): ${err.slice(0, 200)}`);
+    }
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    return data.text || '';
+  }
+
+  function stripFences(s){
+    return s.replace(/^```[a-z]*\n?/i, '').replace(/\n?```\s*$/, '').trim();
+  }
+  function parseFixResponse(text){
+    const m = text.match(/PROBLEM:\s*(.+?)\s*FIX:\s*([\s\S]+)/i);
+    if(!m) return { problem: '', fix: stripFences(text) };
+    return { problem: m[1].trim(), fix: stripFences(m[2].trim()) };
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // Renders an AI response into a bubble element.
+  // The "transferToEditor" flag adds the prominent transfer button (page version).
+  function renderAIResponse(bubble, mode, text, opts){
+    opts = opts || {};
+    bubble.innerHTML = '';
+    if(mode === 'generate'){
+      const code = stripFences(text);
+      const intro = document.createElement('div');
+      intro.style.fontSize = '12.5px';
+      intro.style.color = 'var(--ink-mute)';
+      intro.style.marginBottom = '4px';
+      intro.textContent = 'here you go:';
+      bubble.appendChild(intro);
+      const pre = document.createElement('pre');
+      pre.textContent = code;
+      bubble.appendChild(pre);
+      const actions = document.createElement('div');
+      actions.className = 'ai-action-row';
+      const transferBtn = document.createElement('button');
+      transferBtn.className = 'primary';
+      transferBtn.textContent = opts.large ? '⤓ Transfer to Editor' : 'Load in editor';
+      transferBtn.onclick = () => {
+        codeEl.value = code;
+        updateLineCount();
+        goTo('editor');
+        showToast('Transferred to editor');
+      };
+      const appendBtn = document.createElement('button');
+      appendBtn.textContent = 'Append';
+      appendBtn.onclick = () => {
+        codeEl.value = (codeEl.value ? codeEl.value + '\n\n' : '') + code;
+        updateLineCount();
+        goTo('editor');
+        showToast('Appended to editor');
+      };
+      const copyBtn = document.createElement('button');
+      copyBtn.textContent = 'Copy';
+      copyBtn.onclick = () => {
+        navigator.clipboard?.writeText(code);
+        showToast('Copied');
+      };
+      actions.appendChild(transferBtn);
+      actions.appendChild(appendBtn);
+      actions.appendChild(copyBtn);
+      bubble.appendChild(actions);
+    } else if(mode === 'fix'){
+      const { problem, fix } = parseFixResponse(text);
+      if(problem){
+        const p = document.createElement('div');
+        p.style.fontSize = '13px';
+        p.style.marginBottom = '4px';
+        p.innerHTML = '<strong>problem:</strong> ' + escapeHtml(problem);
+        bubble.appendChild(p);
+      }
+      const pre = document.createElement('pre');
+      pre.textContent = fix;
+      bubble.appendChild(pre);
+      const actions = document.createElement('div');
+      actions.className = 'ai-action-row';
+      const applyBtn = document.createElement('button');
+      applyBtn.className = 'primary';
+      applyBtn.textContent = opts.large ? '✓ Apply Fix to Editor' : 'Apply';
+      applyBtn.onclick = () => {
+        codeEl.value = fix;
+        updateLineCount();
+        goTo('editor');
+        showToast('Applied');
+      };
+      actions.appendChild(applyBtn);
+      bubble.appendChild(actions);
+    } else {
+      // explain — just text
+      const div = document.createElement('div');
+      div.style.whiteSpace = 'pre-wrap';
+      div.textContent = text;
+      bubble.appendChild(div);
+    }
+  }
+
+  // Shared chat handler — used by both the floating bar and the AI page.
+  // outputEl: the container that holds messages
+  // input: the input element with the prompt
+  // mode: ref to current mode
+  // opts.large: render bigger Transfer/Apply button
+  function makeChatHandler(outputEl, input, modeRef, opts){
+    return async (e) => {
+      e.preventDefault();
+      const prompt = input.value.trim();
+      const mode = modeRef.current;
+      const code = codeEl.value;
+
+      // Validation
+      if(mode === 'generate' && !prompt) return;
+      if((mode === 'explain' || mode === 'fix') && !code.trim()){
+        appendUserBubble(outputEl, prompt || `(${mode})`);
+        const bubble = appendAIBubble(outputEl);
+        bubble.innerHTML = '<span style="color:#d22">Editor is empty — go write some code first.</span>';
+        outputEl.scrollTop = outputEl.scrollHeight;
+        return;
+      }
+
+      // User bubble
+      appendUserBubble(outputEl, prompt || `(${mode} editor code)`);
+      input.value = '';
+
+      // AI bubble (loading)
+      const bubble = appendAIBubble(outputEl);
+      bubble.innerHTML = '<span class="ai-loading">Thinking</span>';
+      outputEl.scrollTop = outputEl.scrollHeight;
+
+      try {
+        const sendCode = (mode === 'generate') ? '' : code;
+        const text = await callAI(mode, prompt, sendCode);
+        renderAIResponse(bubble, mode, text, opts);
+      } catch(err){
+        bubble.innerHTML = '<span style="color:#d22">⚠ ' + escapeHtml(err.message) + '</span>';
+      }
+      outputEl.scrollTop = outputEl.scrollHeight;
+    };
+  }
+
+  function appendUserBubble(outputEl, text){
+    const d = document.createElement('div');
+    d.className = 'ai-msg-user';
+    d.textContent = text;
+    outputEl.appendChild(d);
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+  function appendAIBubble(outputEl){
+    const d = document.createElement('div');
+    d.className = 'ai-msg-ai';
+    outputEl.appendChild(d);
+    outputEl.scrollTop = outputEl.scrollHeight;
+    return d;
+  }
+
+  /* ===== AI page (full screen) ===== */
+  const pageOutput = document.getElementById('ai-page-output');
+  const pageInput = document.getElementById('ai-page-input');
+  const pageForm = document.getElementById('ai-page-form');
+  const pageHint = document.getElementById('ai-page-hint');
+
+  if(pageOutput && pageInput && pageForm){
+    const pageMode = { current: 'generate' };
+    const HINTS = {
+      generate: 'Try: "draw 5 rainbow stars" or "make a bouncing ball"',
+      explain: 'Press Enter — I\'ll read the code in your editor and explain it.',
+      fix: 'Press Enter — I\'ll find the bug in your editor code and fix it.'
+    };
+    const PLACEHOLDERS = {
+      generate: 'ask the AI to make something...',
+      explain: '(optional) anything specific to explain?',
+      fix: '(optional) anything specific that\'s broken?'
+    };
+
+    document.querySelectorAll('.ai-page-mode').forEach(btn => {
+      btn.addEventListener('click', () => {
+        pageMode.current = btn.dataset.mode;
+        document.querySelectorAll('.ai-page-mode').forEach(b => b.classList.toggle('active', b === btn));
+        pageHint.textContent = HINTS[pageMode.current];
+        pageInput.placeholder = PLACEHOLDERS[pageMode.current];
+      });
+    });
+
+    pageForm.addEventListener('submit', makeChatHandler(pageOutput, pageInput, pageMode, { large: true }));
+  }
+
+  /* ===== Floating chat bar ===== */
+  const bar = document.getElementById('ai-bar');
+  const barToggle = document.getElementById('ai-bar-toggle');
+  const barClose = document.getElementById('ai-bar-close');
+  const barOutput = document.getElementById('ai-bar-output');
+  const barForm = document.getElementById('ai-bar-form');
+  const barInput = document.getElementById('ai-bar-input');
+
+  if(bar && barForm){
+    const barMode = { current: 'generate' };
+    barToggle.addEventListener('click', () => {
+      bar.classList.toggle('open');
+      if(bar.classList.contains('open')) setTimeout(() => barInput.focus(), 100);
+    });
+    barClose.addEventListener('click', () => bar.classList.remove('open'));
+
+    document.querySelectorAll('.ai-bar-mode').forEach(btn => {
+      btn.addEventListener('click', () => {
+        barMode.current = btn.dataset.mode;
+        document.querySelectorAll('.ai-bar-mode').forEach(b => b.classList.toggle('active', b === btn));
+        barInput.placeholder = barMode.current === 'generate' ? 'describe what you want...' :
+                                barMode.current === 'explain' ? 'press → to explain editor code' :
+                                'press → to fix editor code';
+      });
+    });
+
+    barForm.addEventListener('submit', makeChatHandler(barOutput, barInput, barMode, { large: false }));
+  }
+})();
+
 
 </script>
 </body>
