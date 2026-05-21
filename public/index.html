@@ -1478,7 +1478,7 @@ function resolveColor(name){
   return '#888888'; // unknown: medium gray
 }
 
-/* ========= INTERPRETER v0.3 ========= */
+/* ========= INTERPRETER ========= */
 const SIZE_MIN = 1, SIZE_MAX = 10, DEFAULT_SIZE = 4;
 const SIZE_PX = 30;
 function sizeToPx(n){ return n * SIZE_PX; }
@@ -3218,7 +3218,8 @@ forever()
     end()
   end()
 
-  wait(110)end()`;
+  wait(110)
+end()`;
 
 codeEl.value = exampleCode;
 updateLineCount();
