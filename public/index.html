@@ -263,40 +263,12 @@ body.editor-fullscreen footer{display:none}
   color:var(--ink-mute);font-style:italic;
 }
 .ai-page-output .ai-msg-user,
-.ai-bar-output .ai-msg-user{
-  background:#e8f1ff;color:#0a4a8c;
-  padding:9px 13px;border-radius:14px 14px 4px 14px;
-  margin:6px 0 6px auto;max-width:80%;
-  display:block;width:fit-content;
-}
 .ai-page-output .ai-msg-ai,
-.ai-bar-output .ai-msg-ai{
-  background:#f4f7fb;color:var(--ink);
-  padding:11px 13px;border-radius:14px 14px 14px 4px;
-  margin:6px auto 6px 0;max-width:90%;
-  display:block;width:fit-content;
-}
 .ai-page-output pre,
-.ai-bar-output pre{
-  background:#0a1726;color:#cfe3ff;
-  padding:11px 13px;border-radius:8px;
-  font-family:'JetBrains Mono',monospace;font-size:12.5px;
-  overflow-x:auto;margin:6px 0;white-space:pre;
-}
 .ai-page-output .ai-action-row,
-.ai-bar-output .ai-action-row{
-  display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;
-}
 .ai-page-output .ai-action-row button,
-.ai-bar-output .ai-action-row button{
-  padding:6px 12px;border-radius:999px;font-size:12px;font-weight:500;
-  border:1px solid rgba(15,40,80,0.12);background:#fff;cursor:pointer;
-  font-family:inherit;color:var(--ink);transition:all .15s ease;
-}
 .ai-page-output .ai-action-row button:hover,
-.ai-bar-output .ai-action-row button:hover{background:var(--paper)}
 .ai-page-output .ai-action-row button.primary,
-.ai-bar-output .ai-action-row button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
 .ai-page-form{
   display:flex;gap:8px;
 }
@@ -325,109 +297,6 @@ body.editor-fullscreen footer{display:none}
 @keyframes aiDots{0%,100%{opacity:0.3}50%{opacity:1}}
 
 /* ===== Floating AI chat bar ===== */
-.ai-bar{
-  position:fixed;bottom:30px;right:30px;
-  z-index:500;
-  font-family:inherit;
-}
-.ai-bar-toggle{
-  width:56px;height:56px;border-radius:50%;
-  background:linear-gradient(135deg,#0a84ff,#5ac8fa);
-  color:#fff;border:none;font-size:26px;cursor:pointer;
-  box-shadow:0 8px 24px rgba(10,132,255,0.4);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .2s ease;
-}
-.ai-bar-toggle:hover{transform:scale(1.08)}
-.ai-bar-panel{
-  position:absolute;bottom:70px;right:0;
-  width:min(380px, calc(100vw - 60px));
-  background:#fff;border-radius:var(--radius-lg);
-  box-shadow:0 16px 48px rgba(15,40,80,0.25);
-  border:1px solid rgba(15,40,80,0.08);
-  display:none;flex-direction:column;
-  overflow:hidden;
-}
-.ai-bar.open .ai-bar-panel{display:flex}
-.ai-bar-head{
-  padding:12px 16px;
-  background:linear-gradient(135deg,#0a84ff,#5ac8fa);
-  color:#fff;font-weight:500;font-size:14px;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.ai-bar-close{
-  background:rgba(255,255,255,0.2);border:none;
-  width:24px;height:24px;border-radius:50%;
-  color:#fff;cursor:pointer;font-size:13px;
-}
-.ai-bar-close:hover{background:rgba(255,255,255,0.35)}
-.ai-bar-modes{
-  display:flex;gap:0;background:#f4f7fb;padding:8px;
-  border-bottom:1px solid rgba(15,40,80,0.06);
-}
-.ai-bar-mode{
-  flex:1;padding:7px 0;border:none;background:transparent;
-  font-family:inherit;font-size:12.5px;font-weight:500;
-  color:var(--ink-soft);cursor:pointer;border-radius:6px;
-}
-.ai-bar-mode.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(15,40,80,0.08)}
-.ai-bar-output{
-  flex:1;padding:14px 16px;
-  height:280px;overflow-y:auto;
-  font-size:13.5px;line-height:1.55;color:var(--ink);
-  white-space:pre-wrap;
-}
-.ai-bar-output:empty::before{
-  content:'Ask me to generate code, explain something, or fix a bug.';
-  color:var(--ink-mute);font-style:italic;
-}
-.ai-bar-output pre{
-  background:#0a1726;color:#cfe3ff;
-  padding:10px 12px;border-radius:8px;
-  font-family:'JetBrains Mono',monospace;font-size:12px;
-  overflow-x:auto;margin:6px 0;white-space:pre;
-}
-.ai-bar-output .ai-msg-user{
-  background:#e8f1ff;color:#0a4a8c;
-  padding:8px 12px;border-radius:14px 14px 4px 14px;
-  margin:6px 0 6px auto;max-width:80%;
-  display:block;width:fit-content;font-size:13px;
-}
-.ai-bar-output .ai-msg-ai{
-  background:#f4f7fb;color:var(--ink);
-  padding:10px 12px;border-radius:14px 14px 14px 4px;
-  margin:6px auto 6px 0;max-width:90%;
-  display:block;width:fit-content;font-size:13px;
-}
-.ai-bar-output .ai-msg-ai pre{margin:6px -4px}
-.ai-bar-output .ai-action-row{
-  display:flex;gap:6px;margin-top:6px;
-}
-.ai-bar-output .ai-action-row button{
-  padding:5px 10px;border-radius:999px;font-size:11px;font-weight:500;
-  border:1px solid rgba(15,40,80,0.12);background:#fff;cursor:pointer;
-  font-family:inherit;color:var(--ink);
-}
-.ai-bar-output .ai-action-row button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
-.ai-bar-form{
-  display:flex;gap:6px;padding:10px;
-  border-top:1px solid rgba(15,40,80,0.06);background:#fafcfe;
-}
-.ai-bar-form input{
-  flex:1;border:1px solid rgba(15,40,80,0.12);
-  background:#fff;border-radius:999px;
-  padding:8px 14px;font-family:inherit;font-size:13px;color:var(--ink);outline:none;
-}
-.ai-bar-form input:focus{border-color:var(--accent)}
-.ai-bar-form button{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--ink);color:#fff;border:none;cursor:pointer;
-  font-size:16px;display:flex;align-items:center;justify-content:center;
-}
-
-/* In editor-fullscreen, the ai bar must stay visible */
-body.editor-fullscreen .ai-bar{z-index:600}
-
 /* ==== Balloon Help (vintage Mac System 7 style) ==== */
 .help-toggle{position:relative}
 body.help-mode .help-toggle{
@@ -566,8 +435,6 @@ body.help-mode *[data-help]:hover{
     <button class="tab" data-page="editor" data-help="Where you write code. Type your program, press Run, watch it work on the canvas.">Editor</button>
     <button class="tab" data-page="docs" data-help="The crash course. Learn the whole language in 5 minutes.">Docs</button>
     <button class="tab" data-page="reference" data-help="Every shape, color, and command — with pictures.">Reference</button>
-    <button class="tab" data-page="ai" data-help="Get help from an AI tutor that knows MorrisCode. Generate, explain, or fix code.">🤖 AI</button>
-    <button class="tab" data-page="about" data-help="A note for Mr. Morris. The reason this exists.">About</button>
     <a class="tab tab-link" href="https://github.com/okyproxd/morriscode/tree/main" target="_blank" rel="noopener noreferrer" data-help="See the source code for MorrisCode on GitHub. Opens in a new tab.">⌨ GitHub ↗</a>
     <button class="tab help-toggle" id="help-toggle" data-help="Toggle help mode on or off. When help is on, hover over anything to learn what it does.">💬 Help</button>
   </nav>
@@ -646,222 +513,377 @@ body.help-mode *[data-help]:hover{
   </div>
 </section>
 
-<!-- Floating AI bar — shown only on editor page via JS -->
-<div class="ai-bar" id="ai-bar" hidden>
-  <button class="ai-bar-toggle" id="ai-bar-toggle" data-help="Open the AI chat. It can generate code, explain code, or fix bugs.">🤖</button>
-  <div class="ai-bar-panel" id="ai-bar-panel">
-    <div class="ai-bar-head">
-      <span>🤖 AI helper</span>
-      <button class="ai-bar-close" id="ai-bar-close">✕</button>
-    </div>
-    <div class="ai-bar-modes">
-      <button class="ai-bar-mode active" data-mode="generate">Generate</button>
-      <button class="ai-bar-mode" data-mode="explain">Explain</button>
-      <button class="ai-bar-mode" data-mode="fix">Fix</button>
-    </div>
-    <div class="ai-bar-output" id="ai-bar-output"></div>
-    <form class="ai-bar-form" id="ai-bar-form">
-      <input type="text" id="ai-bar-input" placeholder="ask anything..." autocomplete="off" />
-      <button type="submit">→</button>
-    </form>
-  </div>
-</div>
-
 <!-- DOCS -->
 <section class="page page-padded" id="page-docs">
-  <div class="section-head"><h2>Crash Course</h2><p>The whole language in five minutes.</p></div>
+  <div class="section-head"><h2>Crash Course</h2><p>Everything MorrisCode can do, with examples for every single thing.</p></div>
   <div class="docs-grid">
     <aside class="docs-nav">
       <div class="nav-section">Start Here</div>
       <a href="#one-min">One-Minute Tour</a>
-      <a href="#hello">Hello, world</a>
       <a href="#editor-buttons">Editor buttons</a>
+      <a href="#hello">Hello, world</a>
+
+      <div class="nav-section">Drawing</div>
       <a href="#shapes">Shapes</a>
       <a href="#colors">Colors</a>
-      <a href="#variables">Variables</a>
-      <a href="#if">if() / then()</a>
-      <a href="#math">add, subtract, etc.</a>
-      <a href="#loops">Loops</a>
+      <a href="#sizes-positions">Sizes & positions</a>
+      <a href="#options">Options (border, thick, dashed)</a>
+      <a href="#ids">Naming shapes (ids)</a>
+      <a href="#text">Text on canvas</a>
+      <a href="#fonts">Fonts</a>
+      <a href="#background">Background color</a>
 
-      <div class="nav-section">Make Stuff Move</div>
+      <div class="nav-section">Logic</div>
+      <a href="#variables">Variables</a>
+      <a href="#if">if() and then()</a>
+      <a href="#math">Math: add, subtract, etc.</a>
+      <a href="#random">Random numbers</a>
+      <a href="#loops">Loops</a>
+      <a href="#wait">wait()</a>
+
+      <div class="nav-section">Animation</div>
       <a href="#move">move()</a>
       <a href="#animate">animate()</a>
+      <a href="#set">set()</a>
+      <a href="#delete">delete()</a>
 
-      <div class="nav-section">Make Games</div>
+      <div class="nav-section">Games</div>
       <a href="#game-loop">forever() — the game loop</a>
       <a href="#keys">Keyboard input</a>
       <a href="#mouse">Mouse input</a>
       <a href="#collide">Collision</a>
-      <a href="#delete">delete()</a>
+      <a href="#when">when() — events</a>
       <a href="#make-a-game">🛠 Make your own game</a>
 
-      <div class="nav-section">Extra</div>
-      <a href="#text">Text on canvas</a>
-      <a href="#fonts">Fonts</a>
-      <a href="#ai-shape">🤖 aiShape</a>
-      <a href="#sound">beep()</a>
+      <div class="nav-section">More</div>
+      <a href="#sound">beep() — sound</a>
       <a href="#lists">Lists</a>
       <a href="#examples-section">The Snake example</a>
-      <a href="#errors-help">Error messages</a>
+      <a href="#errors-help">When something breaks</a>
+      <a href="#all-commands">All commands cheat sheet</a>
     </aside>
 
     <article class="docs-content">
+
       <h2 id="one-min">⏱ One-Minute Tour</h2>
-      <p>MorrisCode programs are lines of text. One line = one instruction. Every instruction looks like:</p>
+      <p>Every MorrisCode program is just a list of instructions, one per line. Each instruction looks like this:</p>
       <pre><code>name(stuff)</code></pre>
-      <p>That's the whole rule. Here are the most useful ones:</p>
-      <pre><code>print(Hello!)              <span style="color:#9aa6b4">* show text in console</span>
-draw(circle:5:gold)        <span style="color:#9aa6b4">* draw a gold circle, size 5</span>
-variable(score : 0)        <span style="color:#9aa6b4">* remember a number</span>
-if(score > 5)              <span style="color:#9aa6b4">* do stuff only if true</span>
+      <p>That's the whole rule. Comments start with <code>*</code> — MorrisCode ignores anything on a line that begins with a star.</p>
+      <p>The most useful instructions in one example:</p>
+      <pre><code>* this is a comment
+print(Hello!)               * show text in console
+draw(circle:5:gold)         * draw a gold circle, size 5
+variable(score : 0)         * remember a number
+if(score &gt; 5)            * do stuff only if true
   print(You win!)
-end()                      <span style="color:#9aa6b4">* close the if-block</span>
-add(score, 1)              <span style="color:#9aa6b4">* score = score + 1</span>
-wait(500)                  <span style="color:#9aa6b4">* pause 500 milliseconds</span></code></pre>
-      <p>Lines starting with <code>*</code> are notes that MorrisCode ignores.</p>
+end()                       * close the if-block
+add(score, 1)               * score = score + 1
+wait(500)                   * pause 500 milliseconds</code></pre>
+
+      <h2 id="editor-buttons">🎛 Editor buttons</h2>
+      <p>The toolbar above your code:</p>
+      <ul>
+        <li><strong>📂 Open</strong> — load a .txt file you saved before. Drag-and-drop also works.</li>
+        <li><strong>💾 Save</strong> — save your code as .txt. A dialog asks for a filename.</li>
+        <li><strong>✨ Example</strong> — load the Snake game starter program.</li>
+        <li><strong>⛶ Fullscreen</strong> — make the editor fill your whole screen. Esc to exit.</li>
+        <li><strong>Clear</strong> — erase everything and start over.</li>
+        <li><strong>⏹ Stop</strong> — stop a running program (great for forever-loops).</li>
+        <li><strong>↻ Restart</strong> — stop, then run from scratch.</li>
+        <li><strong>▶ Run</strong> — run your code.</li>
+      </ul>
+      <p>The same Run / Stop / Restart / Fullscreen also appear floating on top of the canvas, even in fullscreen mode.</p>
 
       <h2 id="hello">👋 Hello, world</h2>
       <p>The smallest program:</p>
       <pre><code>print(Hello, world!)</code></pre>
-      <p>Press <strong>▶ Run</strong>. You'll see "Hello, world!" appear in the dark console panel.</p>
-      <p>Now try drawing:</p>
+      <p>Press <strong>▶ Run</strong>. "Hello, world!" appears in the dark console panel below the canvas.</p>
+      <p>Now let's draw something:</p>
       <pre><code>draw(circle)</code></pre>
-      <p>An empty circle with a black outline shows up in the middle of the canvas. Now make it big and blue:</p>
+      <p>An empty circle with a black outline shows up in the middle of the canvas. Make it bigger and colored:</p>
       <pre><code>draw(circle:8:blue)</code></pre>
-
-      <h2 id="editor-buttons">🎛 The editor buttons</h2>
-      <p>The toolbar above your code:</p>
-      <ul>
-        <li><strong>📂 Open</strong> — load a .txt file you saved before. Drag-and-drop also works.</li>
-        <li><strong>💾 Save</strong> — save your code. A dialog asks for a filename. Tick "don't ask again" to make it instant next time. Hold Shift+click to bring back the dialog.</li>
-        <li><strong>✨ Example</strong> — load the Snake game starter program.</li>
-        <li><strong>⛶ Fullscreen</strong> — make the editor fill your whole screen.</li>
-        <li><strong>Clear</strong> — erase everything and start over.</li>
-        <li><strong>⏹ Stop</strong> — stop a running program (great for forever-loops).</li>
-        <li><strong>↻ Restart</strong> — stop, then run from scratch. Useful when a game gets stuck.</li>
-        <li><strong>▶ Run</strong> — run your code. Shortcut: <code>Cmd+Enter</code> (Mac) or <code>Ctrl+Enter</code> (Windows).</li>
-      </ul>
-      <p>The same Run / Stop / Restart / Fullscreen buttons also appear floating on top of the canvas — handy when you're playing a game in fullscreen mode and want to restart without leaving.</p>
+      <p>Try this whole program — it draws and prints:</p>
+      <pre><code>print(Drawing a smiley face!)
+draw(circle:9:gold:noborder)
+draw(circle:1:black:noborder:700,400)
+draw(circle:1:black:noborder:900,400)
+draw(text"*o*":4:black:noborder:800,600)</code></pre>
 
       <h2 id="shapes">🔷 Shapes</h2>
-      <p>Format: <code>draw(shape:size:color:options:x,y)</code>. Everything after <code>shape</code> is optional.</p>
-      <p>Sizes go from <strong>1 (tiny)</strong> to <strong>10 (huge)</strong>. Default is 4. Center of canvas is <code>800,500</code>.</p>
+      <p>The drawing instruction is always:</p>
+      <pre><code>draw(shape:size:color:options:x,y)</code></pre>
+      <p>Everything after <code>shape</code> is optional. Without arguments, you get a default-sized empty-fill shape in the middle of the canvas.</p>
+
+      <p>Here are all 20+ shapes MorrisCode knows:</p>
       <table>
         <tr><th>Shape</th><th>Try this</th></tr>
         <tr><td><code>circle</code></td><td><code>draw(circle:5:tomato)</code></td></tr>
         <tr><td><code>square</code></td><td><code>draw(square:4:blue)</code></td></tr>
+        <tr><td><code>rectangle</code></td><td><code>draw(rectangle:5:lime)</code></td></tr>
+        <tr><td><code>triangle</code></td><td><code>draw(triangle:5:salmon)</code></td></tr>
+        <tr><td><code>pentagon</code></td><td><code>draw(pentagon:5:teal)</code></td></tr>
+        <tr><td><code>hexagon</code></td><td><code>draw(hexagon:5:cyan)</code></td></tr>
+        <tr><td><code>octagon</code></td><td><code>draw(octagon:5:plum)</code></td></tr>
         <tr><td><code>star</code></td><td><code>draw(star:6:gold)</code></td></tr>
         <tr><td><code>heart</code></td><td><code>draw(heart:5:pink)</code></td></tr>
-        <tr><td><code>triangle</code></td><td><code>draw(triangle:5:lime)</code></td></tr>
-        <tr><td><code>hexagon</code></td><td><code>draw(hexagon:5:cyan)</code></td></tr>
+        <tr><td><code>diamond</code></td><td><code>draw(diamond:5:cyan)</code></td></tr>
+        <tr><td><code>oval</code></td><td><code>draw(oval:5:peach)</code></td></tr>
+        <tr><td><code>ring</code></td><td><code>draw(ring:5:gold)</code></td></tr>
         <tr><td><code>moon</code></td><td><code>draw(moon:6:silver)</code></td></tr>
         <tr><td><code>sun</code></td><td><code>draw(sun:6:gold)</code></td></tr>
         <tr><td><code>lightning</code></td><td><code>draw(lightning:5:yellow)</code></td></tr>
+        <tr><td><code>cloud</code></td><td><code>draw(cloud:6:white)</code></td></tr>
+        <tr><td><code>plus</code></td><td><code>draw(plus:5:red)</code></td></tr>
+        <tr><td><code>arrow</code></td><td><code>draw(arrow:5:black:default:400,500:800,500)</code></td></tr>
+        <tr><td><code>line</code></td><td><code>draw(line:3:black:default:100,100:1500,900)</code></td></tr>
+        <tr><td><code>dot</code></td><td><code>draw(dot:2:black)</code></td></tr>
+        <tr><td><code>text</code></td><td><code>draw(text"Hi!":5:navy)</code></td></tr>
       </table>
-      <p>See the <a href="#" data-goto="reference" style="color:var(--accent)">Reference</a> page for the full shape gallery.</p>
-
-      <h3>Options</h3>
-      <ul>
-        <li><code>noborder</code> — no black outline</li>
-        <li><code>thick</code> — fat outline</li>
-        <li><code>dashed</code> — dashed outline</li>
-      </ul>
-      <pre><code>draw(circle:6:tomato:noborder)
-draw(square:4:gold:thick:200,200)</code></pre>
-
-      <h3>Naming your shapes (so you can move them)</h3>
-      <p>Add a number after the shape to give it an id:</p>
-      <pre><code>draw(star_1:5:gold:noborder:400,500)
-draw(star_2:5:gold:noborder:800,500)
-draw(star_3:5:gold:noborder:1200,500)</code></pre>
-      <p>Now you can animate each one separately. If you don't pick a number, MorrisCode picks one for you (<code>star_1</code>, <code>star_2</code>, etc.).</p>
+      <p>See every shape rendered on the <strong>Reference</strong> page — click any one to copy its code.</p>
 
       <h2 id="colors">🎨 Colors</h2>
-      <p>Just type the color you want. MorrisCode knows over 200 names — case doesn't matter.</p>
+      <p>Just type the color name. MorrisCode knows over 200, and case doesn't matter.</p>
       <pre><code>draw(circle:5:tomato)
 draw(circle:5:salmon)
 draw(circle:5:sunshine)
 draw(circle:5:ocean)
 draw(circle:5:lavender)
-draw(circle:5:cinnamon)</code></pre>
-      <p>If you can think of an object's color, type it. <code>peach</code>, <code>cherry</code>, <code>moss</code>, <code>brick</code>, <code>cream</code>, <code>storm</code> — they all work. Full color list on the <a href="#" data-goto="reference" style="color:var(--accent)">Reference</a> page.</p>
+draw(circle:5:cinnamon)
+draw(circle:5:moss)
+draw(circle:5:brick)</code></pre>
+      <p>If you can think of an object's color, type it. <code>peach</code>, <code>cherry</code>, <code>storm</code>, <code>cream</code>, <code>mint</code> — they all work.</p>
+      <p>Full color list with previews on the <strong>Reference</strong> page. Click any swatch to copy the name.</p>
+
+      <h2 id="sizes-positions">📏 Sizes & positions</h2>
+      <p><strong>Sizes</strong> go from <code>1</code> (tiny) to <code>10</code> (huge). Default is <code>4</code>. Anything outside 1-10 throws an error.</p>
+      <p><strong>Positions</strong> are <code>x,y</code> in pixels. The canvas is <code>1600</code> wide and <code>1000</code> tall.</p>
+      <ul>
+        <li>Center of canvas: <code>800,500</code></li>
+        <li>Top-left: <code>0,0</code></li>
+        <li>Bottom-right: <code>1600,1000</code></li>
+      </ul>
+      <pre><code>draw(circle:5:gold:noborder:800,500)     <span style="color:#9aa6b4">* center</span>
+draw(circle:3:tomato:noborder:100,100)   <span style="color:#9aa6b4">* top-left corner</span>
+draw(circle:3:lime:noborder:1500,900)    <span style="color:#9aa6b4">* bottom-right corner</span></code></pre>
+
+      <h2 id="options">⚙️ Options (border, thick, dashed)</h2>
+      <p>The 4th slot in <code>draw()</code> is for options:</p>
+      <ul>
+        <li><code>noborder</code> — no black outline (great for solid shapes)</li>
+        <li><code>thick</code> — fat outline</li>
+        <li><code>dashed</code> — dashed outline</li>
+        <li><code>default</code> — normal outline (or leave the slot empty)</li>
+      </ul>
+      <pre><code>draw(circle:6:tomato:noborder)
+draw(square:4:gold:thick:200,200)
+draw(star:5:lime:dashed:800,500)
+draw(heart:5:pink:default:1200,500)</code></pre>
+
+      <h2 id="ids">🏷 Naming shapes (ids)</h2>
+      <p>Add an id after the shape name with an underscore, so you can refer to it later:</p>
+      <pre><code>draw(star_1:5:gold:noborder:400,500)
+draw(star_2:5:lime:noborder:800,500)
+draw(star_3:5:pink:noborder:1200,500)</code></pre>
+      <p>Now each star has a name. You can <code>move()</code>, <code>animate()</code>, <code>delete()</code>, or <code>set()</code> any one of them:</p>
+      <pre><code>animate(star_1:spin:4)
+move(star_2:3:800,200)
+delete(star_3)</code></pre>
+      <p>Ids can be letters or numbers (<code>star_5</code>, <code>square_player</code>, <code>text_score</code>) — but no spaces.</p>
+      <p>If you don't pick an id, MorrisCode picks one for you (<code>circle_1</code>, <code>circle_2</code>, etc).</p>
+
+      <h2 id="text">💬 Text on canvas</h2>
+      <p>Put words on the canvas (not just the console):</p>
+      <pre><code>draw(text"Hello, world!":5:navy:noborder:800,500)
+draw(text"Score: 0":4:white:noborder:200,80)</code></pre>
+      <p>Text uses the same colon-format as shapes, but with a quoted string instead of a shape name.</p>
+      <p>To update text later (like a score), give it an id and use <code>delete()</code>:</p>
+      <pre><code>draw(text_1"Score: 0":4:white:noborder:200,80)
+<span style="color:#9aa6b4">* later, when score changes:</span>
+delete(text_1)
+draw(text_1"Score: {score}":4:white:noborder:200,80)</code></pre>
+      <p><strong>Tip:</strong> You can put any variable inside the text using <code>{name}</code>:</p>
+      <pre><code>variable(name : Owen)
+draw(text"Hi {name}!":5:navy:noborder:800,500)</code></pre>
+
+      <h2 id="fonts">🔤 Fonts</h2>
+      <p>Add a font name as the last slot in a <code>text</code> draw call (the 6th piece, after position):</p>
+      <pre><code>draw(text"Adventure!":7:gold:noborder:800,400:lobster)
+draw(text"GAME OVER":8:tomato:noborder:800,500:pixel)
+draw(text"my note":4:navy:noborder:800,300:caveat)</code></pre>
+      <p>All font names are <strong>lowercase, no spaces, no punctuation</strong>. There's a full font gallery on the Reference page — click any font to copy its name.</p>
+
+      <h2 id="background">🌌 Background color</h2>
+      <p>Sets the entire canvas to one color:</p>
+      <pre><code>background(midnight)
+background(skyblue)
+background(black)
+background(white)</code></pre>
+      <p>Tip: do this <strong>once</strong> at the top of your program. If you put it inside <code>forever()</code> it'll keep painting over your shapes.</p>
 
       <h2 id="variables">📝 Variables</h2>
-      <p>A variable remembers a value. Set it once, use it later.</p>
+      <p>A variable remembers a value with a name. Set it once, use it later.</p>
       <pre><code>variable(score : 0)
 variable(name : Owen)
-variable(myColor : tomato)</code></pre>
-      <p>Use a variable's value by wrapping it in curly braces:</p>
+variable(myColor : tomato)
+variable(alive : yes)</code></pre>
+      <p>Read a variable by wrapping its name in curly braces:</p>
       <pre><code>print(Hi {name}!)
-draw(circle:5:{myColor})</code></pre>
+draw(circle:5:{myColor}:noborder:800,500)
+draw(text"Score: {score}":4:white:noborder:200,80)</code></pre>
+      <p>You can change a variable any time. Whatever was there gets overwritten:</p>
+      <pre><code>variable(score : 0)
+print({score})         <span style="color:#9aa6b4">* prints 0</span>
+variable(score : 42)
+print({score})         <span style="color:#9aa6b4">* prints 42</span></code></pre>
 
       <h2 id="if">⚖️ if() and then()</h2>
-      <p>The simplest way to do something only if a condition is true:</p>
-      <pre><code>if(score > 5) then(print(You win!))
+      <p>Run code only when something is true. Simplest form:</p>
+      <pre><code>if(score &gt; 5) then(print(You win!))
 if(name = Owen) then(beep(C, 200))</code></pre>
-      <p>Comparisons: <code>=</code> (equal), <code>!=</code> (not equal), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>.</p>
-      <p>For more than one line of code inside the if, write it across multiple lines and close with <code>end()</code>:</p>
-      <pre><code>if(score > 5)
+      <p>Comparisons:</p>
+      <ul>
+        <li><code>=</code> — equal</li>
+        <li><code>!=</code> — not equal</li>
+        <li><code>&gt;</code> — greater than</li>
+        <li><code>&lt;</code> — less than</li>
+        <li><code>&gt;=</code> — greater or equal</li>
+        <li><code>&lt;=</code> — less or equal</li>
+      </ul>
+      <p>For more than one line of code in the if-block, span multiple lines and close with <code>end()</code>:</p>
+      <pre><code>if(score &gt; 5)
   print(Awesome!)
   draw(star:6:gold)
   beep(G, 200)
 end()</code></pre>
-      <p>Tiny shortcut: <code>if(alive)</code> is the same as <code>if(alive = yes)</code>.</p>
+      <p>Shortcut: <code>if(alive)</code> is the same as <code>if(alive = yes)</code>.</p>
+      <p>You can nest ifs:</p>
+      <pre><code>if(alive)
+  if(score &gt; 10)
+    print(High score!)
+  end()
+end()</code></pre>
 
       <h2 id="math">🧮 Math — the easy way</h2>
-      <p>Use these instead of <code>command(math, ...)</code>:</p>
+      <p>One-word commands instead of long math expressions:</p>
       <pre><code>add(score, 1)         <span style="color:#9aa6b4">* score = score + 1</span>
 subtract(lives, 1)    <span style="color:#9aa6b4">* lives = lives - 1</span>
 multiply(speed, 2)    <span style="color:#9aa6b4">* speed = speed × 2</span>
-divide(price, 4)      <span style="color:#9aa6b4">* price = price / 4</span>
-random(dice, 1, 6)    <span style="color:#9aa6b4">* dice = a random number 1-6</span></code></pre>
+divide(price, 4)      <span style="color:#9aa6b4">* price = price / 4</span></code></pre>
+      <p>The first argument is the variable to change. The second is what to add/subtract/etc.</p>
+      <p>Negative numbers work:</p>
+      <pre><code>variable(direction : 10)
+multiply(direction, -1)   <span style="color:#9aa6b4">* direction is now -10</span></code></pre>
+
+      <h2 id="random">🎲 Random numbers</h2>
+      <p><code>random()</code> picks a random number between two values and stores it in a variable:</p>
+      <pre><code>random(dice, 1, 6)        <span style="color:#9aa6b4">* dice = random 1-6</span>
+random(x, 0, 1600)        <span style="color:#9aa6b4">* x = random canvas position</span>
+random(color, 1, 3)       <span style="color:#9aa6b4">* color = 1, 2, or 3</span></code></pre>
+      <p>Common pattern — random color picker:</p>
+      <pre><code>random(pick, 1, 4)
+if(pick = 1) then(variable(c : tomato))
+if(pick = 2) then(variable(c : gold))
+if(pick = 3) then(variable(c : lime))
+if(pick = 4) then(variable(c : pink))
+draw(star:5:{c}:noborder:800,500)</code></pre>
 
       <h2 id="loops">🔁 Loops</h2>
-      <p>Three ways to repeat code:</p>
-      <pre><code><span style="color:#9aa6b4">* repeat exactly 5 times</span>
-repeat(5)
+      <p>Three ways to repeat code.</p>
+      <h3>repeat() — do it N times</h3>
+      <pre><code>repeat(5)
   draw(star:3:gold)
   wait(200)
-end()
-
-<span style="color:#9aa6b4">* count from 1 to 10</span>
-loop(i from 1 to 10)
+end()</code></pre>
+      <h3>loop() — count from one number to another</h3>
+      <pre><code>loop(i from 1 to 10)
   print(Number {i})
-end()
-
-<span style="color:#9aa6b4">* go forever (until stop())</span>
-forever()
+end()</code></pre>
+      <p>The variable <code>{i}</code> changes each time through the loop. Use it!</p>
+      <pre><code><span style="color:#9aa6b4">* draw 10 stars in a row</span>
+loop(i from 1 to 10)
+  variable(spot : {i})
+  multiply(spot, 150)
+  draw(star:3:gold:noborder:{spot},500)
+end()</code></pre>
+      <h3>forever() — until you stop it</h3>
+      <pre><code>forever()
   draw(circle:1:gold:noborder)
   wait(50)
 end()</code></pre>
+      <p>To stop a forever loop from inside, use <code>stop()</code> or press the ⏹ Stop button.</p>
 
-      <h3>Pausing — wait()</h3>
-      <p>You can write times in plain English:</p>
+      <h2 id="wait">⏰ wait()</h2>
+      <p>Pause your program. You can write times in plain English:</p>
       <pre><code>wait(500)            <span style="color:#9aa6b4">* 500 milliseconds (half a second)</span>
 wait(1 second)       <span style="color:#9aa6b4">* one whole second</span>
 wait(3 seconds)      <span style="color:#9aa6b4">* three seconds</span>
 wait(2 minutes)      <span style="color:#9aa6b4">* two minutes</span></code></pre>
-      <p>Same goes for <code>beep()</code>: <code>beep(C, 1 second)</code> works.</p>
+      <p>Same works for <code>beep()</code>: <code>beep(C, 1 second)</code>.</p>
 
       <h2 id="move">🚀 move()</h2>
-      <p>Slide a shape to a new place:</p>
+      <p>Slide an existing shape smoothly to a new position:</p>
       <pre><code>draw(circle_1:5:tomato:noborder:100,500)
 move(circle_1 : 3 : 1500,500)</code></pre>
-      <p>Format: <code>move(shape_id : speed : x,y)</code>. Speed is 1–10.</p>
+      <p>Format: <code>move(shape_id : speed : x,y)</code>. Speed is 1 (slow) to 10 (fast).</p>
+      <p>The shape needs an id first — that's why we wrote <code>circle_1</code> instead of just <code>circle</code>.</p>
 
       <h2 id="animate">🎬 animate()</h2>
-      <p>Built-in animations that loop until you call <code>stop()</code>:</p>
+      <p>Built-in animations that loop on a shape until you call <code>stop()</code> or <code>delete()</code> it.</p>
       <pre><code>draw(star_1:7:gold:noborder:800,500)
 animate(star_1 : spin : 4)</code></pre>
-      <p>Types: <code>spin</code>, <code>pulse</code>, <code>bounce</code>, <code>shake</code>, <code>fade</code>, <code>rainbow</code>.</p>
+      <p>Animation types:</p>
+      <ul>
+        <li><code>spin</code> — rotate continuously</li>
+        <li><code>pulse</code> — grow and shrink</li>
+        <li><code>bounce</code> — bob up and down</li>
+        <li><code>shake</code> — wiggle</li>
+        <li><code>fade</code> — fade in and out</li>
+        <li><code>rainbow</code> — cycle colors</li>
+      </ul>
+      <p>Speed is 1-10. Combine animations on different shapes:</p>
+      <pre><code>draw(star_1:5:gold:noborder:400,500)
+draw(star_2:5:tomato:noborder:800,500)
+draw(star_3:5:lime:noborder:1200,500)
+animate(star_1:spin:4)
+animate(star_2:pulse:5)
+animate(star_3:rainbow:3)</code></pre>
 
-      <h2 id="game-loop">🎮 Making games — the forever loop</h2>
-      <p>Every game has a loop that runs over and over: read input → update things → draw → wait → repeat. In MorrisCode that's:</p>
+      <h2 id="set">🔧 set()</h2>
+      <p>Change a property of a shape that's already drawn — without redrawing it from scratch:</p>
+      <pre><code>draw(circle_1:5:gold:noborder:800,500)
+set(circle_1:x:1000)              <span style="color:#9aa6b4">* move it right</span>
+set(circle_1:y:300)               <span style="color:#9aa6b4">* move it up</span>
+set(circle_1:color:tomato)        <span style="color:#9aa6b4">* change color</span>
+set(circle_1:size:8)              <span style="color:#9aa6b4">* make it bigger</span>
+set(circle_1:rotation:45)         <span style="color:#9aa6b4">* rotate 45 degrees</span>
+set(circle_1:opacity:0.5)         <span style="color:#9aa6b4">* half see-through</span></code></pre>
+      <p>Properties: <code>x</code>, <code>y</code>, <code>pos</code>, <code>color</code>, <code>size</code>, <code>rotation</code>, <code>opacity</code>, <code>border</code>, <code>text</code>.</p>
+      <p><code>set()</code> is faster than delete + draw, especially in a forever loop.</p>
+
+      <h2 id="delete">🗑 delete()</h2>
+      <p>Remove one shape without erasing the rest of the canvas:</p>
+      <pre><code>draw(square_1:3:gold:noborder:{x},500)
+<span style="color:#9aa6b4">* later:</span>
+delete(square_1)</code></pre>
+      <p>Compare with <code>clear()</code>, which erases everything:</p>
+      <pre><code>clear()       <span style="color:#9aa6b4">* wipe the whole canvas</span></code></pre>
+
+      <h2 id="game-loop">🎮 forever() — the game loop</h2>
+      <p>Every game has the same heartbeat: read input → update things → draw → wait → repeat. In MorrisCode that's:</p>
       <pre><code>forever()
-  <span style="color:#9aa6b4">* read keys, move things, check collisions, redraw</span>
-  wait(50)
+  <span style="color:#9aa6b4">* 1. read keys</span>
+  if(key = ArrowRight) then(add(x, 10))
+
+  <span style="color:#9aa6b4">* 2. update positions or state</span>
+  add(score, 1)
+
+  <span style="color:#9aa6b4">* 3. redraw shapes</span>
+  set(square_1:x:{x})
+
+  <span style="color:#9aa6b4">* 4. wait so it doesn't run too fast</span>
+  wait(30)
 end()</code></pre>
-      <p>To stop a forever loop from inside, use <code>stop()</code>.</p>
+      <p>The <code>wait()</code> at the end controls speed. Lower = faster.</p>
 
       <h2 id="keys">⌨️ Keyboard input</h2>
       <p>The variable <code>{key}</code> always holds the most recently pressed key. Use it inside a forever loop:</p>
@@ -871,20 +893,26 @@ draw(square_1:3:gold:noborder:{x},500)
 forever()
   if(key = ArrowRight) then(add(x, 10))
   if(key = ArrowLeft) then(subtract(x, 10))
-  delete(square_1)
-  draw(square_1:3:gold:noborder:{x},500)
+  set(square_1:x:{x})
   wait(30)
 end()</code></pre>
-      <p>Key names: <code>ArrowLeft</code>, <code>ArrowRight</code>, <code>ArrowUp</code>, <code>ArrowDown</code>, single letters (<code>a</code>, <code>b</code>, <code>w</code>...), <code>Space</code>, <code>Enter</code>.</p>
-      <p><strong>Click the canvas first</strong> so it grabs your keypresses.</p>
+      <p>Key names:</p>
+      <ul>
+        <li>Arrows: <code>ArrowLeft</code>, <code>ArrowRight</code>, <code>ArrowUp</code>, <code>ArrowDown</code></li>
+        <li>Letters: <code>a</code>, <code>b</code>, <code>c</code>... (lowercase)</li>
+        <li>Numbers: <code>0</code>, <code>1</code>, <code>2</code>...</li>
+        <li>Special: <code>Space</code>, <code>Enter</code>, <code>Tab</code>, <code>Escape</code>, <code>Shift</code></li>
+      </ul>
+      <p><strong>Important:</strong> click the canvas first so it knows to listen for your keys. Otherwise it'll just type into the editor.</p>
 
       <h2 id="mouse">🖱 Mouse input</h2>
-      <p>These variables update as you move the mouse on the canvas:</p>
+      <p>These variables update as you move and click on the canvas:</p>
       <ul>
-        <li><code>{mouseX}</code>, <code>{mouseY}</code> — where the cursor is</li>
-        <li><code>{mouseDown}</code> — <code>yes</code> or <code>no</code></li>
-        <li><code>{clickX}</code>, <code>{clickY}</code> — last click position</li>
+        <li><code>{mouseX}</code>, <code>{mouseY}</code> — where the cursor is right now</li>
+        <li><code>{mouseDown}</code> — <code>yes</code> if a button is held, <code>no</code> otherwise</li>
+        <li><code>{clickX}</code>, <code>{clickY}</code> — position of the last click</li>
       </ul>
+      <p>Example — a circle that follows the mouse:</p>
       <pre><code>forever()
   clear()
   draw(circle:4:tomato:noborder:{mouseX},{mouseY})
@@ -893,90 +921,39 @@ end()</code></pre>
 
       <h2 id="collide">💥 Collision</h2>
       <p>Check if two points are close to each other:</p>
-      <pre><code>collide(hit, headX, headY, foodX, foodY, 30)
+      <pre><code>collide(hit, ballX, ballY, paddleX, paddleY, 50)
 if(hit) then(beep(E, 100))</code></pre>
-      <p>Format: <code>collide(answer, x1, y1, x2, y2, distance)</code>. Sets <code>answer</code> to <code>yes</code> if the two points are within <code>distance</code> pixels of each other, else <code>no</code>.</p>
+      <p>Format: <code>collide(answer, x1, y1, x2, y2, distance)</code>. The first argument is the variable that gets <code>yes</code> or <code>no</code>.</p>
+      <p>Bigger distance = easier to collide. For tight collisions use 20-30. For loose ones use 60-100.</p>
 
-      <h2 id="delete">🗑 delete()</h2>
-      <p>Remove one shape (without erasing the whole canvas):</p>
-      <pre><code>draw(square_1:3:gold:noborder:{x},500)
-<span style="color:#9aa6b4">* later, when you want to redraw it at a new spot:</span>
-delete(square_1)
-draw(square_1:3:gold:noborder:{newX},500)</code></pre>
+      <h2 id="when">📨 when() — events</h2>
+      <p>Run a block of code when something happens, without sticking it inside <code>forever()</code>.</p>
+      <h3>when(click)</h3>
+      <pre><code>when(click)
+  print(You clicked!)
+  draw(circle:3:gold:noborder:{clickX},{clickY})
+end()</code></pre>
+      <h3>when(start)</h3>
+      <pre><code>when(start)
+  print(The game is starting!)
+end()</code></pre>
+      <h3>when(message, X) + broadcast(X)</h3>
+      <p>Send a message from one part of your program to another:</p>
+      <pre><code>when(message, hello)
+  print(Got the hello message!)
+end()
 
-      <h2 id="text">💬 Text on canvas</h2>
-      <p>Put words on the canvas (not just the console):</p>
-      <pre><code>draw(text"Hello, world!":5:navy:noborder:800,500)
-draw(text"Score: 0":4:white:noborder:200,80)</code></pre>
-      <p>To update text later (like a score), give it an id and use <code>delete()</code>:</p>
-      <pre><code>draw(text_1"Score: 0":4:white:noborder:200,80)
-<span style="color:#9aa6b4">* later, when score changes:</span>
-delete(text_1)
-draw(text_1"Score: {score}":4:white:noborder:200,80)</code></pre>
-
-      <h3 id="fonts">Picking a font</h3>
-      <p>Add a font name as the last colon-piece (the 6th slot, after position):</p>
-      <pre><code>draw(text"Adventure!":7:gold:noborder:800,400:lobster)
-draw(text"GAME OVER":8:tomato:noborder:800,500:pixel)
-draw(text"my note":4:navy:noborder:800,300:caveat)</code></pre>
-      <p>All font names are <strong>lowercase, no spaces, no punctuation</strong>. Below is every available font, each saying "Hello, World!" in its style. Click a row to copy the name.</p>
-      <div id="font-gallery" class="font-gallery"></div>
-
-      <h2 id="ai-shape">🤖 aiShape() — let AI draw for you</h2>
-      <p>You can ask the AI to draw any object as a custom shape, then use that shape like any other. The AI generates a simple SVG, and your shape gets that name forever (well, until you reload the page).</p>
-      <pre><code><span style="color:#9aa6b4">* define an AI shape — only do this once</span>
-aiShape(salmon, "a cooked salmon")
-aiShape(rocket, "a rocket ship pointing up")
-
-<span style="color:#9aa6b4">* now use them like normal shapes</span>
-draw(salmon:5:salmon:noborder:400,500)
-draw(rocket:6:tomato:noborder:1000,500)
-animate(rocket_1:bounce:3)</code></pre>
-      <h3>Rules for the name</h3>
-      <ul>
-        <li>One word, lowercase letters and numbers only</li>
-        <li>No spaces, no symbols (so <code>cookedsalmon</code> not <code>cooked salmon</code>)</li>
-        <li>Don't use a name that's already a real shape (like <code>circle</code>) — pick something unique</li>
-      </ul>
-      <h3>Tips</h3>
-      <ul>
-        <li>The AI is small — drawings come out simple, not photo-realistic. A "cooked salmon" looks like a salmon-shaped silhouette, not a Pixar fish.</li>
-        <li>Simple silhouettes work best: tree, fish, rocket, heart, mushroom, sword, key, crown</li>
-        <li>The first call takes a second or two (AI is thinking). Calling it again with the same name is instant — it's cached.</li>
-        <li>Color in <code>draw()</code> overrides the AI's choice. So <code>draw(salmon:5:gold)</code> draws the salmon shape but gold instead of pink.</li>
-      </ul>
-      <h3>What if the AI refuses?</h3>
-      <p>If you ask for something silly or inappropriate, the AI says no. You'll see an error in the console. Try a different word.</p>
-
-      <h2 id="sound">🔊 beep()</h2>
-      <pre><code>beep(C, 200)
-beep(E, 200)
-beep(G, 400)</code></pre>
-      <p>Notes: <code>C D E F G A B</code> — duration in milliseconds.</p>
-
-      <h2 id="lists">📋 Lists</h2>
-      <p>Lists hold multiple things in order. Useful when you have lots of similar stuff (like snake body segments).</p>
-      <pre><code>list(colors, red, gold, blue, green)
-print({colors[1]})       <span style="color:#9aa6b4">* prints "red"</span>
-print({colors[3]})       <span style="color:#9aa6b4">* prints "blue"</span>
-
-listAdd(colors, purple)  <span style="color:#9aa6b4">* add a new item</span>
-listSet(colors, 2, pink) <span style="color:#9aa6b4">* change item #2</span>
-listRemove(colors, 1)    <span style="color:#9aa6b4">* remove item #1</span>
-listLength(colors, n)    <span style="color:#9aa6b4">* how long is it?</span>
-listGet(c, colors, 1)    <span style="color:#9aa6b4">* read item into a variable</span></code></pre>
+<span style="color:#9aa6b4">* later, anywhere:</span>
+broadcast(hello)</code></pre>
 
       <h2 id="make-a-game">🛠 How to make your own game (step by step)</h2>
-      <p>You know the pieces now. Let's put them together. We'll build a tiny game where a circle dodges falling squares. Each step is one or two lines — copy them in order, run after each step.</p>
+      <p>You have all the pieces now. Let's build a simple dodge game where a circle dodges falling squares.</p>
 
       <h3>Step 1 — Set the scene</h3>
-      <p>First we need a background and a "player" — a circle the user controls. We give the circle the id <code>circle_1</code> so we can move it later.</p>
       <pre><code>background(midnight)
 draw(circle_1:3:gold:noborder:800,900)</code></pre>
-      <p>Press Run. You should see a gold circle near the bottom center of the canvas.</p>
 
-      <h3>Step 2 — Make the player move with arrow keys</h3>
-      <p>We put everything inside <code>forever()</code> so it keeps running. Inside, we check what key is pressed and move the circle. <code>set()</code> changes a property of an existing shape.</p>
+      <h3>Step 2 — Move with arrow keys</h3>
       <pre><code>background(midnight)
 draw(circle_1:3:gold:noborder:800,900)
 variable(playerX : 800)
@@ -987,10 +964,8 @@ forever()
   set(circle_1:x:{playerX})
   wait(30)
 end()</code></pre>
-      <p>Click the canvas first (so it listens for keys), then use ← and → arrows.</p>
 
-      <h3>Step 3 — Add a falling square</h3>
-      <p>Now we'll add a square that falls from the top. <code>random()</code> gives it a starting x position. Each loop, we move it down. When it goes off-screen, we reset it.</p>
+      <h3>Step 3 — Add a falling enemy</h3>
       <pre><code>background(midnight)
 draw(circle_1:3:gold:noborder:800,900)
 variable(playerX : 800)
@@ -1004,7 +979,7 @@ forever()
   set(circle_1:x:{playerX})
 
   add(enemyY, 10)
-  if(enemyY > 1000)
+  if(enemyY &gt; 1000)
     variable(enemyY : 0)
     random(enemyX, 100, 1500)
   end()
@@ -1014,9 +989,8 @@ forever()
   wait(30)
 end()</code></pre>
 
-      <h3>Step 4 — Detect a hit</h3>
-      <p>Use <code>collide()</code> to check if the player and enemy are close. If they are, end the game.</p>
-      <pre><code>* (everything from step 3, plus add this inside the forever loop, before wait)
+      <h3>Step 4 — Add collision and game-over</h3>
+      <pre><code><span style="color:#9aa6b4">* inside the forever loop, before wait():</span>
 collide(hit, playerX, 900, enemyX, enemyY, 50)
 if(hit)
   draw(text"GAME OVER":8:tomato:noborder:800,500:bungee)
@@ -1025,12 +999,11 @@ if(hit)
 end()</code></pre>
 
       <h3>Step 5 — Add a score</h3>
-      <p>Count how long you survive. Display it in the corner.</p>
       <pre><code>variable(score : 0)
 draw(text_score"Score: 0":3:white:noborder:200,80)
 
-* inside the forever loop, when the enemy resets:
-if(enemyY > 1000)
+<span style="color:#9aa6b4">* in the forever loop, when enemy resets:</span>
+if(enemyY &gt; 1000)
   variable(enemyY : 0)
   random(enemyX, 100, 1500)
   add(score, 1)
@@ -1038,161 +1011,137 @@ if(enemyY > 1000)
   draw(text_score"Score: {score}":3:white:noborder:200,80)
 end()</code></pre>
 
-      <h3>The recipe</h3>
-      <p>Every game follows the same structure:</p>
+      <h3>The recipe for any game</h3>
       <ol style="margin-left:22px;color:var(--ink-soft);font-size:15px;line-height:1.8">
-        <li><strong>Setup</strong> — background, draw initial shapes, declare variables (score, lives, positions)</li>
-        <li><strong>forever() loop</strong> — the heartbeat. Everything inside happens about 30 times a second.</li>
+        <li><strong>Setup</strong> — background, draw initial shapes, set starting variables</li>
+        <li><strong>forever() loop</strong> — runs ~30 times a second</li>
         <li><strong>Read input</strong> — check <code>key</code>, <code>mouseX</code>, <code>clickX</code>, etc.</li>
-        <li><strong>Update state</strong> — move things, change variables, count score</li>
-        <li><strong>Check rules</strong> — collisions, win/lose conditions</li>
-        <li><strong>Redraw</strong> — use <code>set()</code> to update existing shapes (cheaper than delete+draw)</li>
-        <li><strong>wait()</strong> — control speed. Lower = faster.</li>
+        <li><strong>Update state</strong> — move things, count score</li>
+        <li><strong>Check rules</strong> — collisions, win/lose</li>
+        <li><strong>Redraw</strong> — use <code>set()</code> on existing shapes</li>
+        <li><strong>wait()</strong> — controls speed</li>
       </ol>
-      <p>Try changing the recipe: replace squares with circles, add a second enemy, make the player shoot squares back. Once you can build the dodge game, you can build pong, breakout, asteroids, anything.</p>
-      <p>Click <strong>✨ Example</strong> in the editor toolbar to load the Snake game. It's the same source code you'd write yourself — read through it, then change things to learn:</p>
+
+      <h2 id="sound">🔊 beep() — sound</h2>
+      <p>Play a single musical note:</p>
+      <pre><code>beep(C, 200)
+beep(E, 200)
+beep(G, 400)</code></pre>
+      <p>Notes are <code>C D E F G A B</code> (case doesn't matter). Duration is milliseconds, or words like <code>1 second</code>.</p>
+      <p>Play a simple tune:</p>
+      <pre><code>beep(C, 200)
+beep(D, 200)
+beep(E, 200)
+beep(F, 200)
+beep(G, 400)
+beep(F, 200)
+beep(E, 200)
+beep(D, 200)
+beep(C, 400)</code></pre>
+
+      <h2 id="lists">📋 Lists</h2>
+      <p>Lists hold multiple values in order. Useful for keeping track of lots of similar things (like snake body segments).</p>
+      <h3>Make a list</h3>
+      <pre><code>list(colors, red, gold, blue, green)
+list(numbers, 1, 2, 3, 4, 5)</code></pre>
+      <h3>Read an item</h3>
+      <pre><code>listGet(c, colors, 1)    <span style="color:#9aa6b4">* c becomes "red" (first item)</span>
+listGet(c, colors, 3)    <span style="color:#9aa6b4">* c becomes "blue"</span></code></pre>
+      <p>Items count from <strong>1</strong>, not 0.</p>
+      <h3>Add, remove, change</h3>
+      <pre><code>listAdd(colors, purple)      <span style="color:#9aa6b4">* add to the end</span>
+listSet(colors, 2, pink)     <span style="color:#9aa6b4">* change item #2</span>
+listRemove(colors, 1)        <span style="color:#9aa6b4">* remove item #1</span>
+listLength(colors, n)        <span style="color:#9aa6b4">* n = how many items</span></code></pre>
+
+      <h2 id="examples-section">🎮 The Snake example</h2>
+      <p>Click <strong>✨ Example</strong> in the editor toolbar to load Snake. It's the same syntax you'd write — read it through, then break things to learn:</p>
       <ul>
-        <li>Make the snake faster: lower the <code>wait()</code> at the bottom of the loop</li>
-        <li>Change colors: swap <code>lime</code> for any color name</li>
-        <li>Make the snake start longer: add more numbers to <code>list(xs, ...)</code> and <code>list(ys, ...)</code></li>
-        <li>Bigger food: change the food's <code>circle_99:1</code> to <code>circle_99:2</code></li>
+        <li>Make it faster: lower the <code>wait()</code> at the bottom of the loop</li>
+        <li>Change colors: swap <code>lime</code> for <code>cyan</code> or any color</li>
+        <li>Start longer: add more numbers to <code>list(xs, ...)</code> and <code>list(ys, ...)</code></li>
+        <li>Bigger food: change <code>circle_food:1</code> to <code>circle_food:2</code></li>
       </ul>
-      <p>Best way to learn programming is to read working code, then break it on purpose.</p>
+      <p>The best way to learn programming is to read working code, then change one thing at a time.</p>
 
       <h2 id="errors-help">⚠️ When something breaks</h2>
-      <p>Errors show up in the console with a <strong>line number</strong>, an explanation, and a <strong>(?)</strong> link that opens these docs at the right place.</p>
+      <p>Errors show up in the console with a line number, a plain explanation, and a <strong>(?)</strong> link that opens these docs.</p>
       <p>Most common mistakes:</p>
       <ul>
-        <li><strong>Forgot <code>end()</code></strong> — every <code>if()</code>, <code>repeat()</code>, <code>loop()</code>, <code>forever()</code> needs a closing <code>end()</code>.</li>
-        <li><strong>Size out of range</strong> — sizes are 1 to 10, no more, no less.</li>
-        <li><strong>No shape with id...</strong> — you tried to <code>move()</code> or <code>delete()</code> a shape that wasn't drawn yet.</li>
-        <li><strong>Misspelled color</strong> — unknown colors render as gray. Check the color list on the Reference page.</li>
+        <li><strong>Forgot end()</strong> — every <code>if()</code>, <code>repeat()</code>, <code>loop()</code>, <code>forever()</code> needs a matching <code>end()</code>.</li>
+        <li><strong>Size out of range</strong> — sizes are 1 to 10.</li>
+        <li><strong>No shape with id...</strong> — you tried to <code>move()</code>, <code>set()</code>, or <code>delete()</code> a shape that wasn't drawn yet.</li>
+        <li><strong>Misspelled color</strong> — unknown colors render as gray. Check the Reference page.</li>
+        <li><strong>Forgot the colons</strong> — <code>draw()</code> uses colons between parts: <code>draw(circle:5:gold)</code> not <code>draw(circle 5 gold)</code>.</li>
+        <li><strong>Variable doesn't update</strong> — make sure you used <code>{name}</code> when reading the variable, not just <code>name</code>.</li>
       </ul>
 
-      <h2>🆚 Quick translation: old vs new</h2>
-      <p>Anything that used to be <code>command(...)</code> now has a shorter version. Both still work — pick whichever feels nicer.</p>
+      <h2 id="all-commands">📑 All commands cheat sheet</h2>
       <table>
-        <tr><th>The wordy way</th><th>The simple way</th></tr>
-        <tr><td><code>command(if, x, =, 5)</code></td><td><code>if(x = 5)</code></td></tr>
-        <tr><td><code>command(end)</code></td><td><code>end()</code></td></tr>
-        <tr><td><code>command(repeat, 5)</code></td><td><code>repeat(5)</code></td></tr>
-        <tr><td><code>command(forever)</code></td><td><code>forever()</code></td></tr>
-        <tr><td><code>command(loop, i, 1, 10)</code></td><td><code>loop(i from 1 to 10)</code></td></tr>
-        <tr><td><code>command(wait, 500)</code></td><td><code>wait(500)</code></td></tr>
-        <tr><td><code>command(clear)</code></td><td><code>clear()</code></td></tr>
-        <tr><td><code>command(stop)</code></td><td><code>stop()</code></td></tr>
-        <tr><td><code>command(background, sky)</code></td><td><code>background(sky)</code></td></tr>
-        <tr><td><code>command(random, n, 1, 6)</code></td><td><code>random(n, 1, 6)</code></td></tr>
-        <tr><td><code>command(math, x, +, x, 1)</code></td><td><code>add(x, 1)</code></td></tr>
+        <tr><th>Command</th><th>What it does</th></tr>
+        <tr><td><code>print(text)</code></td><td>Print to console</td></tr>
+        <tr><td><code>variable(name : value)</code></td><td>Create or update a variable</td></tr>
+        <tr><td><code>draw(shape:size:color:opts:x,y)</code></td><td>Draw a shape</td></tr>
+        <tr><td><code>draw(text"...":size:color:opts:x,y:font)</code></td><td>Draw text on canvas</td></tr>
+        <tr><td><code>move(id : speed : x,y)</code></td><td>Slide a shape to a new position</td></tr>
+        <tr><td><code>animate(id : type : speed)</code></td><td>Spin, pulse, bounce, shake, fade, rainbow</td></tr>
+        <tr><td><code>set(id : property : value)</code></td><td>Change x, y, color, size, rotation, opacity, text</td></tr>
+        <tr><td><code>delete(id)</code></td><td>Remove one shape</td></tr>
+        <tr><td><code>clear()</code></td><td>Wipe the entire canvas</td></tr>
+        <tr><td><code>background(color)</code></td><td>Set the canvas background</td></tr>
+        <tr><td><code>if(x &gt; 5)</code> ... <code>end()</code></td><td>Conditional</td></tr>
+        <tr><td><code>if(x &gt; 5) then(action)</code></td><td>One-line conditional</td></tr>
+        <tr><td><code>repeat(n)</code> ... <code>end()</code></td><td>Repeat n times</td></tr>
+        <tr><td><code>loop(i from 1 to 10)</code> ... <code>end()</code></td><td>Counted loop</td></tr>
+        <tr><td><code>forever()</code> ... <code>end()</code></td><td>Loop until stop</td></tr>
+        <tr><td><code>add(var, n)</code></td><td>var = var + n</td></tr>
+        <tr><td><code>subtract(var, n)</code></td><td>var = var − n</td></tr>
+        <tr><td><code>multiply(var, n)</code></td><td>var = var × n</td></tr>
+        <tr><td><code>divide(var, n)</code></td><td>var = var / n</td></tr>
+        <tr><td><code>random(var, min, max)</code></td><td>Pick a random number</td></tr>
+        <tr><td><code>wait(ms)</code></td><td>Pause (also "1 second", "2 minutes")</td></tr>
+        <tr><td><code>collide(answer, x1, y1, x2, y2, dist)</code></td><td>Distance check, yes/no</td></tr>
+        <tr><td><code>beep(note, duration)</code></td><td>Play a tone</td></tr>
+        <tr><td><code>when(click)</code> / <code>when(start)</code> / <code>when(message, X)</code></td><td>Event handler</td></tr>
+        <tr><td><code>broadcast(X)</code></td><td>Send a custom message</td></tr>
+        <tr><td><code>list(name, v1, v2)</code></td><td>Create a list</td></tr>
+        <tr><td><code>listAdd / listRemove / listSet / listGet / listLength</code></td><td>List operations</td></tr>
+        <tr><td><code>stop()</code></td><td>Stop all forever loops and animations</td></tr>
       </table>
+
+      <p><strong>Built-in variables you can read any time:</strong> <code>{mouseX}</code>, <code>{mouseY}</code>, <code>{mouseDown}</code>, <code>{clickX}</code>, <code>{clickY}</code>, <code>{key}</code>, <code>{time}</code>, <code>{width}</code>, <code>{height}</code>.</p>
+
     </article>
   </div>
 </section>
 
 <!-- REFERENCE -->
 <section class="page page-padded" id="page-reference">
-  <div class="section-head"><h2>Reference</h2><p>Every command, every shape, every color.</p></div>
-
-  <div class="docs-content" style="max-width:none">
-    <h2 id="ref-commands">All Commands</h2>
-    <table>
-      <tr><th>Command</th><th>Purpose</th></tr>
-      <tr><td><code>print(text)</code></td><td>Print to console</td></tr>
-      <tr><td><code>log(style, text)</code></td><td>Styled output (bold/italic/error/info)</td></tr>
-      <tr><td><code>input(name, prompt)</code></td><td>Ask user, store answer</td></tr>
-      <tr><td><code>variable(name : value)</code></td><td>Create / update a variable</td></tr>
-      <tr><td><code>list(name, v1, v2, ...)</code></td><td>Create a list</td></tr>
-      <tr><td><code>listAdd(name, value)</code></td><td>Append to a list</td></tr>
-      <tr><td><code>listRemove(name, index)</code></td><td>Remove item by index</td></tr>
-      <tr><td><code>listSet(name, index, value)</code></td><td>Change an item</td></tr>
-      <tr><td><code>listGet(varName, listName, index)</code></td><td>Read item into a variable</td></tr>
-      <tr><td><code>listLength(name, varName)</code></td><td>Get list length into a variable</td></tr>
-      <tr><td><code>delete(shape_id)</code></td><td>Remove a single shape</td></tr>
-      <tr><td><code>collide(varName, x1, y1, x2, y2, threshold)</code></td><td>Distance check (sets var to yes/no)</td></tr>
-      <tr><td><code>draw(shape:size:color:opts:x,y)</code></td><td>Draw a shape</td></tr>
-      <tr><td><code>draw(text"...":size:color:opts:x,y)</code></td><td>Draw text on canvas</td></tr>
-      <tr><td><code>draw(custom:'a':'b':...:size:color:opts:x,y)</code></td><td>Custom polygon</td></tr>
-      <tr><td><code>move(id : speed : x,y)</code></td><td>Slide a shape to a new spot</td></tr>
-      <tr><td><code>animate(id : type : speed)</code></td><td>Loop animation: spin/pulse/bounce/shake/fade/rainbow</td></tr>
-      <tr><td><code>set(id : property : value)</code></td><td>Change a shape's property</td></tr>
-      <tr><td><code>pen(id : on/off : color : thickness)</code></td><td>Trail-drawing pen</td></tr>
-      <tr><td><code>beep(note, duration)</code></td><td>Play a tone</td></tr>
-      <tr><td><code>when(event)</code> ... <code>end()</code></td><td>Event handler (start, click, message)</td></tr>
-      <tr><td><code>broadcast(message)</code></td><td>Send a custom message</td></tr>
-      <tr><td><code>command(clear)</code></td><td>Wipe the canvas</td></tr>
-      <tr><td><code>command(background, color)</code></td><td>Set background color</td></tr>
-      <tr><td><code>command(wait, ms)</code></td><td>Pause</td></tr>
-      <tr><td><code>command(stop)</code></td><td>Stop all animations and forever loops</td></tr>
-      <tr><td><code>command(if, var, op, val)</code></td><td>Conditional</td></tr>
-      <tr><td><code>command(repeat, n)</code></td><td>Repeat n times</td></tr>
-      <tr><td><code>command(forever)</code></td><td>Loop forever</td></tr>
-      <tr><td><code>command(loop, var, from, to)</code></td><td>Counted loop</td></tr>
-      <tr><td><code>command(end)</code></td><td>Close any block</td></tr>
-      <tr><td><code>command(math, var, op, a, b)</code></td><td>Math: +, -, *, /, %, ^, min, max</td></tr>
-      <tr><td><code>command(random, var, min, max)</code></td><td>Random number</td></tr>
-    </table>
-
-    <h2 id="ref-builtin-vars">Built-in Variables</h2>
-    <table>
-      <tr><th>Variable</th><th>Value</th></tr>
-      <tr><td><code>{mouseX}</code> / <code>{mouseY}</code></td><td>Current mouse position on canvas</td></tr>
-      <tr><td><code>{mouseDown}</code></td><td><code>yes</code> or <code>no</code></td></tr>
-      <tr><td><code>{key}</code></td><td>Currently pressed key, or empty</td></tr>
-      <tr><td><code>{clickX}</code> / <code>{clickY}</code></td><td>Last click position</td></tr>
-      <tr><td><code>{time}</code></td><td>Milliseconds since program started</td></tr>
-      <tr><td><code>{width}</code> / <code>{height}</code></td><td>Canvas size (1600 / 1000)</td></tr>
-    </table>
-
-    <h2 id="ref-shapes">All Shapes</h2>
-    <div class="shape-grid" id="shape-gallery"></div>
-
-    <h2 id="ref-colors">Color Library</h2>
-    <p>Type any of these (case doesn't matter):</p>
-    <div class="color-grid" id="color-gallery"></div>
-  </div>
-</section>
-
-<!-- AI -->
-<section class="page page-padded" id="page-ai">
   <div class="section-head">
-    <h2>🤖 AI Helper</h2>
-    <p>Same chat as the bubble in the editor — just a bigger view.</p>
+    <h2>Reference</h2>
+    <p>Every shape, every color, every font — with previews. Click anything to copy its code.</p>
   </div>
-  <div class="ai-page-shell">
-    <div class="ai-page-modes">
-      <button class="ai-page-mode active" data-mode="generate">Generate</button>
-      <button class="ai-page-mode" data-mode="explain">Explain</button>
-      <button class="ai-page-mode" data-mode="fix">Fix</button>
-    </div>
-    <div class="ai-page-output" id="ai-page-output"></div>
-    <form class="ai-page-form" id="ai-page-form">
-      <input type="text" id="ai-page-input" placeholder="ask the AI to make something..." autocomplete="off" />
-      <button type="submit">Ask →</button>
-    </form>
-    <div class="ai-page-hint" id="ai-page-hint">
-      Try: "draw 5 rainbow stars" or "make a bouncing ball that follows the mouse"
-    </div>
-  </div>
+
+  <h2 style="font-family:'Fraunces',serif;font-weight:500;margin:30px 0 12px;font-size:24px">All Shapes</h2>
+  <div class="shape-grid" id="shape-gallery"></div>
+
+  <h2 style="font-family:'Fraunces',serif;font-weight:500;margin:40px 0 12px;font-size:24px">Color Library</h2>
+  <p style="color:var(--ink-soft);margin-bottom:10px">Click any swatch to copy its name. Use them anywhere a color goes.</p>
+  <div class="color-grid" id="color-gallery"></div>
+
+  <h2 style="font-family:'Fraunces',serif;font-weight:500;margin:40px 0 12px;font-size:24px">Fonts</h2>
+  <p style="color:var(--ink-soft);margin-bottom:10px">Use a font in <code>draw(text"...":size:color:opts:x,y:<strong>fontname</strong>)</code>. Click any to copy the name.</p>
+  <div id="font-gallery" class="font-gallery"></div>
 </section>
 
-<!-- ABOUT -->
-<section class="page page-padded" id="page-about">
-  <div class="about-card">
-    <h2>For Mr. Morris</h2>
-    <p>You taught me that a curious question is worth more than a memorized answer. You are the best science teacher a kid could dream to learn with.</p>
-    <p>I've been working on this since the beginning of May, going to bed at 10PM every working night.</p>
-    <p>I'm headed to a new school next year, and I wanted to leave behind something I made — not just a card. So I built a programming language. It's small and a little silly, but every line of it exists because of a class I'll never forget.</p>
-    <p>Try it. Break it. Make a circle that turns into a face. Show it to your next class.</p>
-    <p>I hope I was a good enough student for you.</p>
-    <p class="signature">— Owen</p>
-  </div>
-</section>
+<footer style="text-align:center;padding:40px 24px;color:var(--ink-mute);font-size:13px">
+  MorrisCode v0.9 · made with care · <a href="#" id="footer-editor" style="color:var(--accent);text-decoration:none">try the editor</a>
+</footer>
 
-</main>
-
-<footer>MorrisCode v0.9 · made with care · <a href="#" id="footer-editor">try the editor</a></footer>
+<!-- Toast notification -->
 <div class="toast" id="toast">Saved!</div>
 
+<!-- Save dialog -->
 <div class="modal-overlay" id="save-modal">
   <div class="modal">
     <h3>💾 Save your code</h3>
@@ -1213,6 +1162,8 @@ end()</code></pre>
   </div>
 </div>
 
+
+
 <script>
 /* ========= NAV with URL routing ========= */
 const tabs = document.querySelectorAll('.tab[data-page]');
@@ -1223,11 +1174,9 @@ const PATH_TO_PAGE = {
   '/editor': 'editor',
   '/docs': 'docs',
   '/reference': 'reference',
-  '/ai': 'ai',
-  '/about': 'about'
 };
 const PAGE_TO_PATH = {
-  home: '/', editor: '/editor', docs: '/docs', reference: '/reference', ai: '/ai', about: '/about'
+  home: '/', editor: '/editor', docs: '/docs', reference: '/reference',
 };
 
 function goTo(name, fromPopstate){
@@ -1253,18 +1202,6 @@ function goTo(name, fromPopstate){
     // Defensive: also force inline display so nothing can override
     p.style.display = isActive ? 'block' : 'none';
   });
-
-  // Show floating AI bubble only on editor page
-  const aiBar = document.getElementById('ai-bar');
-  if(aiBar){
-    if(name === 'editor'){
-      aiBar.removeAttribute('hidden');
-    } else {
-      aiBar.setAttribute('hidden', '');
-      aiBar.classList.remove('open'); // close panel when leaving
-    }
-  }
-
   if(name === 'docs'){
     setTimeout(() => {
       let saved = null;
@@ -1507,6 +1444,20 @@ function splitColons(s){
 function parseLine(line){
   line = line.trim();
   if(!line || line.startsWith('*') || line.startsWith('//')) return null;
+
+  // Strip trailing inline comments: cut anything after a " * " at the top level (outside parens).
+  // Lets users write:  print(hello) * a friendly greeting
+  let parenDepth = 0;
+  for(let i = 0; i < line.length; i++){
+    const c = line[i];
+    if(c === '(') parenDepth++;
+    else if(c === ')') parenDepth--;
+    else if(parenDepth === 0 && c === '*' && i > 0 && /\s/.test(line[i-1])){
+      line = line.slice(0, i).trim();
+      break;
+    }
+  }
+  if(!line) return null;
 
   // Reject lines that don't look like name(...) at all
   if(!line.includes('(') || !line.endsWith(')')){
@@ -1954,8 +1905,6 @@ class MorrisRuntime {
     this.inForever = 0;
     this.eventHandlers = { click: [], message: {} };
     this.startTime = performance.now();
-    // customShapes is per-session, NOT cleared on reset, so AI shapes survive Restart
-    if(!this.customShapes) this.customShapes = {};
   }
   log(text, cls='log-info'){
     const span = document.createElement('div');
@@ -2299,7 +2248,6 @@ class MorrisRuntime {
       }
       case 'move': await this.moveShape(args); break;
       case 'animate': this.animateShape(args); break;
-      case 'aishape': await this.fetchAIShape(args); break;
       case 'set': this.setShape(args); break;
       case 'pen': this.setupPen(args); break;
       case 'beep':
@@ -2465,11 +2413,6 @@ class MorrisRuntime {
   }
 
   renderShape(s){
-    // Custom AI-generated shape?
-    if(this.customShapes && this.customShapes[s.shape]){
-      this.renderCustomShape(s, this.customShapes[s.shape]);
-      return;
-    }
     const ctx = this.ctx;
     const px = sizeToPx(s.size) * (s.scale || 1);
     const [x, y] = s.pos;
@@ -2757,76 +2700,6 @@ class MorrisRuntime {
       requestAnimationFrame(tick);
     });
   }
-
-  async fetchAIShape(args){
-    // aiShape(name, "description")
-    const name = (args[0] || '').toString().toLowerCase().trim();
-    const description = (args[1] || '').toString().trim();
-    if(!name) throw new Error(`aiShape needs a name. Try: aiShape(salmon, "a cooked salmon")`);
-    if(!description) throw new Error(`aiShape needs a description. Try: aiShape(${name}, "a cooked salmon")`);
-    if(!/^[a-z][a-z0-9]*$/.test(name)){
-      throw new Error(`aiShape name "${name}" must be one word, lowercase letters only`);
-    }
-    // Already cached?
-    if(this.customShapes[name]){
-      this.log(`  aiShape: using cached "${name}"`, 'log-cmd');
-      return;
-    }
-    this.log(`  aiShape: asking AI to draw "${description}"...`, 'log-cmd');
-    try {
-      const res = await fetch('/api/ai-shape', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description })
-      });
-      if(!res.ok){
-        const errText = await res.text();
-        throw new Error(`AI request failed (${res.status})`);
-      }
-      const data = await res.json();
-      if(data.error || !data.paths || data.paths.length === 0){
-        throw new Error(data.error || 'AI returned no paths');
-      }
-      this.customShapes[name] = { paths: data.paths };
-      this.log(`  aiShape: "${name}" ready (${data.paths.length} paths)`, 'log-cmd');
-    } catch(err){
-      throw new Error(`couldn't generate "${name}": ${err.message}`);
-    }
-  }
-
-  renderCustomShape(s, customDef){
-    const ctx = this.ctx;
-    const px = sizeToPx(s.size) * (s.scale || 1);
-    const x = s.pos[0], y = s.pos[1];
-    const scale = px / 200; // shapes are designed for a 200x200 box
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
-    if(s.rotation) ctx.rotate(s.rotation);
-    ctx.globalAlpha = s.opacity ?? 1;
-
-    // Override fill if user gave a color (other than 'none')
-    const userFill = s.fill && s.fill !== 'none' ? resolveColor(s.fill) : null;
-
-    customDef.paths.forEach(p => {
-      try {
-        const path = new Path2D(p.d);
-        if(p.fill && p.fill.toLowerCase() !== 'none'){
-          ctx.fillStyle = userFill || resolveColor(p.fill) || p.fill;
-          ctx.fill(path);
-        }
-        if(p.stroke && p.stroke.toLowerCase() !== 'none'){
-          ctx.strokeStyle = resolveColor(p.stroke) || p.stroke;
-          ctx.lineWidth = 2;
-          ctx.stroke(path);
-        }
-      } catch(e){
-        // bad path data — skip silently
-      }
-    });
-    ctx.restore();
-  }
-
   animateShape(args){
     const [id, type, speedRaw] = args;
     const shape = this.shapes[id];
@@ -3569,235 +3442,6 @@ document.querySelectorAll('.docs-nav a').forEach(link => {
     history.replaceState(null, '', href);
   });
 });
-
-/* ========= AI HELPER ========= */
-(function setupAI(){
-
-  // Shared API call
-  async function callAI(mode, prompt, code){
-    const res = await fetch('/api/ai', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode, prompt, code })
-    });
-    if(!res.ok){
-      const err = await res.text();
-      throw new Error(`AI request failed (${res.status}): ${err.slice(0, 200)}`);
-    }
-    const data = await res.json();
-    if(data.error) throw new Error(data.error);
-    return data.text || '';
-  }
-
-  function stripFences(s){
-    return s.replace(/^```[a-z]*\n?/i, '').replace(/\n?```\s*$/, '').trim();
-  }
-  function parseFixResponse(text){
-    const m = text.match(/PROBLEM:\s*(.+?)\s*FIX:\s*([\s\S]+)/i);
-    if(!m) return { problem: '', fix: stripFences(text) };
-    return { problem: m[1].trim(), fix: stripFences(m[2].trim()) };
-  }
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  // Renders an AI response into a bubble element.
-  // The "transferToEditor" flag adds the prominent transfer button (page version).
-  function renderAIResponse(bubble, mode, text, opts){
-    opts = opts || {};
-    bubble.innerHTML = '';
-    if(mode === 'generate'){
-      const code = stripFences(text);
-      const intro = document.createElement('div');
-      intro.style.fontSize = '12.5px';
-      intro.style.color = 'var(--ink-mute)';
-      intro.style.marginBottom = '4px';
-      intro.textContent = 'here you go:';
-      bubble.appendChild(intro);
-      const pre = document.createElement('pre');
-      pre.textContent = code;
-      bubble.appendChild(pre);
-      const actions = document.createElement('div');
-      actions.className = 'ai-action-row';
-      const transferBtn = document.createElement('button');
-      transferBtn.className = 'primary';
-      transferBtn.textContent = opts.large ? '⤓ Transfer to Editor' : 'Load in editor';
-      transferBtn.onclick = () => {
-        codeEl.value = code;
-        updateLineCount();
-        goTo('editor');
-        showToast('Transferred to editor');
-      };
-      const appendBtn = document.createElement('button');
-      appendBtn.textContent = 'Append';
-      appendBtn.onclick = () => {
-        codeEl.value = (codeEl.value ? codeEl.value + '\n\n' : '') + code;
-        updateLineCount();
-        goTo('editor');
-        showToast('Appended to editor');
-      };
-      const copyBtn = document.createElement('button');
-      copyBtn.textContent = 'Copy';
-      copyBtn.onclick = () => {
-        navigator.clipboard?.writeText(code);
-        showToast('Copied');
-      };
-      actions.appendChild(transferBtn);
-      actions.appendChild(appendBtn);
-      actions.appendChild(copyBtn);
-      bubble.appendChild(actions);
-    } else if(mode === 'fix'){
-      const { problem, fix } = parseFixResponse(text);
-      if(problem){
-        const p = document.createElement('div');
-        p.style.fontSize = '13px';
-        p.style.marginBottom = '4px';
-        p.innerHTML = '<strong>problem:</strong> ' + escapeHtml(problem);
-        bubble.appendChild(p);
-      }
-      const pre = document.createElement('pre');
-      pre.textContent = fix;
-      bubble.appendChild(pre);
-      const actions = document.createElement('div');
-      actions.className = 'ai-action-row';
-      const applyBtn = document.createElement('button');
-      applyBtn.className = 'primary';
-      applyBtn.textContent = opts.large ? '✓ Apply Fix to Editor' : 'Apply';
-      applyBtn.onclick = () => {
-        codeEl.value = fix;
-        updateLineCount();
-        goTo('editor');
-        showToast('Applied');
-      };
-      actions.appendChild(applyBtn);
-      bubble.appendChild(actions);
-    } else {
-      // explain — just text
-      const div = document.createElement('div');
-      div.style.whiteSpace = 'pre-wrap';
-      div.textContent = text;
-      bubble.appendChild(div);
-    }
-  }
-
-  // Shared chat handler — used by both the floating bar and the AI page.
-  // outputEl: the container that holds messages
-  // input: the input element with the prompt
-  // mode: ref to current mode
-  // opts.large: render bigger Transfer/Apply button
-  function makeChatHandler(outputEl, input, modeRef, opts){
-    return async (e) => {
-      e.preventDefault();
-      const prompt = input.value.trim();
-      const mode = modeRef.current;
-      const code = codeEl.value;
-
-      // Validation
-      if(mode === 'generate' && !prompt) return;
-      if((mode === 'explain' || mode === 'fix') && !code.trim()){
-        appendUserBubble(outputEl, prompt || `(${mode})`);
-        const bubble = appendAIBubble(outputEl);
-        bubble.innerHTML = '<span style="color:#d22">Editor is empty — go write some code first.</span>';
-        outputEl.scrollTop = outputEl.scrollHeight;
-        return;
-      }
-
-      // User bubble
-      appendUserBubble(outputEl, prompt || `(${mode} editor code)`);
-      input.value = '';
-
-      // AI bubble (loading)
-      const bubble = appendAIBubble(outputEl);
-      bubble.innerHTML = '<span class="ai-loading">Thinking</span>';
-      outputEl.scrollTop = outputEl.scrollHeight;
-
-      try {
-        const sendCode = (mode === 'generate') ? '' : code;
-        const text = await callAI(mode, prompt, sendCode);
-        renderAIResponse(bubble, mode, text, opts);
-      } catch(err){
-        bubble.innerHTML = '<span style="color:#d22">⚠ ' + escapeHtml(err.message) + '</span>';
-      }
-      outputEl.scrollTop = outputEl.scrollHeight;
-    };
-  }
-
-  function appendUserBubble(outputEl, text){
-    const d = document.createElement('div');
-    d.className = 'ai-msg-user';
-    d.textContent = text;
-    outputEl.appendChild(d);
-    outputEl.scrollTop = outputEl.scrollHeight;
-  }
-  function appendAIBubble(outputEl){
-    const d = document.createElement('div');
-    d.className = 'ai-msg-ai';
-    outputEl.appendChild(d);
-    outputEl.scrollTop = outputEl.scrollHeight;
-    return d;
-  }
-
-  /* ===== AI page (full screen) ===== */
-  const pageOutput = document.getElementById('ai-page-output');
-  const pageInput = document.getElementById('ai-page-input');
-  const pageForm = document.getElementById('ai-page-form');
-  const pageHint = document.getElementById('ai-page-hint');
-
-  if(pageOutput && pageInput && pageForm){
-    const pageMode = { current: 'generate' };
-    const HINTS = {
-      generate: 'Try: "draw 5 rainbow stars" or "make a bouncing ball"',
-      explain: 'Press Enter — I\'ll read the code in your editor and explain it.',
-      fix: 'Press Enter — I\'ll find the bug in your editor code and fix it.'
-    };
-    const PLACEHOLDERS = {
-      generate: 'ask the AI to make something...',
-      explain: '(optional) anything specific to explain?',
-      fix: '(optional) anything specific that\'s broken?'
-    };
-
-    document.querySelectorAll('.ai-page-mode').forEach(btn => {
-      btn.addEventListener('click', () => {
-        pageMode.current = btn.dataset.mode;
-        document.querySelectorAll('.ai-page-mode').forEach(b => b.classList.toggle('active', b === btn));
-        pageHint.textContent = HINTS[pageMode.current];
-        pageInput.placeholder = PLACEHOLDERS[pageMode.current];
-      });
-    });
-
-    pageForm.addEventListener('submit', makeChatHandler(pageOutput, pageInput, pageMode, { large: true }));
-  }
-
-  /* ===== Floating chat bar ===== */
-  const bar = document.getElementById('ai-bar');
-  const barToggle = document.getElementById('ai-bar-toggle');
-  const barClose = document.getElementById('ai-bar-close');
-  const barOutput = document.getElementById('ai-bar-output');
-  const barForm = document.getElementById('ai-bar-form');
-  const barInput = document.getElementById('ai-bar-input');
-
-  if(bar && barForm){
-    const barMode = { current: 'generate' };
-    barToggle.addEventListener('click', () => {
-      bar.classList.toggle('open');
-      if(bar.classList.contains('open')) setTimeout(() => barInput.focus(), 100);
-    });
-    barClose.addEventListener('click', () => bar.classList.remove('open'));
-
-    document.querySelectorAll('.ai-bar-mode').forEach(btn => {
-      btn.addEventListener('click', () => {
-        barMode.current = btn.dataset.mode;
-        document.querySelectorAll('.ai-bar-mode').forEach(b => b.classList.toggle('active', b === btn));
-        barInput.placeholder = barMode.current === 'generate' ? 'describe what you want...' :
-                                barMode.current === 'explain' ? 'press → to explain editor code' :
-                                'press → to fix editor code';
-      });
-    });
-
-    barForm.addEventListener('submit', makeChatHandler(barOutput, barInput, barMode, { large: false }));
-  }
-})();
-
 
 </script>
 </body>
