@@ -1,50 +1,64 @@
 # MorrisCode
 
-A friendly programming language built as a final-year gift for Mr. Morris.
+A tiny, friendly programming language I built as a final-project gift for my science teacher, Mr. Morris. You write commands in plain English-y syntax, press Run, and a canvas comes alive — no semicolons, no curly braces, no boilerplate.
 
-## Files
+**Live site:** [morriscode.owenkentyu.workers.dev](https://morriscode.owenkentyu.workers.dev)
 
-**Required for the site to work:**
-- `index.html` — the whole app (one file, no dependencies, ~155 KB)
-- `_redirects` — Cloudflare Pages route rewrites for `/editor`, `/docs`, etc.
+## What it does
 
-**Recommended:**
-- `.gitignore` — keeps junk (.git internals, .wrangler cache, OS files) out of git
-- `README.md` — this file
+- A custom interpreted language designed for beginners (kids especially)
+- Code editor with line numbers, save/load, fullscreen, keyboard shortcuts
+- 20+ shapes, 200+ named colors, 60+ fonts
+- Animations: spin, pulse, bounce, shake, fade, rainbow
+- Lists, variables, math, conditionals, loops, events
+- Mouse and keyboard input for making games
+- A complete Snake game built in the language itself, included as an example
+- Full documentation with examples for every command
+- Reference page with click-to-copy galleries of every shape, color, and font
 
-**Optional:**
-- `morriscode.html` — duplicate of index.html, can ignore
-- `examples/` — readable copies of the four games (already baked into index.html)
+## Try it
 
-## Deploy: use Cloudflare Pages, not Workers
+Open the [live site](https://morriscode.owenkentyu.workers.dev), click **Editor**, click **✨ Example** to load Snake, click **▶ Run**. Click the canvas, then use the arrow keys to play.
 
-Your last deploy ran `npx wrangler deploy`, which is the **Workers** command. It uploaded `.git/` and other junk as assets and choked on `_redirects` validation. Switch to **Pages** — it's simpler and built for static sites like this.
+A minimal program looks like this:
 
-1. Cloudflare dashboard → **Workers & Pages** → click the **Pages** tab
-2. **Create a Pages project** → **Connect to Git** → pick your repo
-3. Build settings:
-   - Framework preset: **None**
-   - Build command: **(leave blank)**
-   - Build output directory: **(leave blank or `/`)**
-   - Root directory: **(leave blank)**
-4. Save and Deploy
+```
+background(midnight)
+draw(circle:5:gold:noborder:800,500)
+animate(circle_1:pulse:4)
+```
 
-Pages auto-builds on every `git push`. No `wrangler deploy`, no build step.
+That's a glowing gold circle pulsing in the middle of the canvas.
 
-If you accidentally created a Workers project already, delete it (Cloudflare dashboard → Workers & Pages → that project → Settings → bottom of page → Delete).
+## Tech
 
-## Custom domain (after Pages is working)
+- One static HTML file with everything inlined — language interpreter, editor, docs, all of it
+- Hosted on Cloudflare Workers (static-assets mode) with a tiny `_worker.js` for routing
+- No build step, no dependencies, no framework
+- Designed to work even when opened directly as a local file
 
-Pages → your project → **Custom domains** → enter your domain.
+## File structure
 
-If your domain is on GoDaddy, easiest path is to switch nameservers to the two Cloudflare gives you. Then everything routes through Cloudflare automatically.
+```
+morriscode/
+├── _worker.js          Cloudflare Worker entry (serves static files)
+├── wrangler.jsonc      Cloudflare config
+├── .gitignore
+├── README.md
+└── public/
+    └── index.html      The entire app
+```
 
-## Local testing
+## Local development
+
+Clone the repo, then either open `public/index.html` directly in a browser, or run a quick local server:
 
 ```bash
-cd /path/to/morriscode
+cd public
 python3 -m http.server 8000
 # visit http://localhost:8000
 ```
 
-You can also just double-click `index.html` — most things work, but the `/editor`-style URLs only work over HTTP(S).
+## Built by
+
+Owen Yu, Class of '26. Started May 2026. Built for Mr. Morris.
